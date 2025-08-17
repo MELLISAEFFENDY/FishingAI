@@ -1,0 +1,762 @@
+=== FISH IT ADVANCED DEBUG EXPORT ===
+Game PlaceId: 121864768012064
+Game Name: Fish It
+Export Time: 2025-08-16 12:03:16
+Total Remotes Found: 80
+Total Fishing Objects Found: 452
+Remote Calls Monitored: 211
+
+=== COMPLETE REMOTES LIST ===
+[1] CmdrFunction (RemoteFunction): ReplicatedStorage.CmdrClient.CmdrFunction
+[2] CmdrEvent (RemoteEvent): ReplicatedStorage.CmdrClient.CmdrEvent
+[3] UserOwnsGamePass (RemoteFunction): ReplicatedStorage.Shared.GamePassUtility.UserOwnsGamePass
+[4] RE/PromptGamePassPurchase (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PromptGamePassPurchase
+[5] RE/PromptProductPurchase (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PromptProductPurchase
+[6] RE/PromptPurchase (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PromptPurchase
+[7] RE/ProductPurchaseFinished (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ProductPurchaseFinished
+[8] RE/DisplaySystemMessage (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/DisplaySystemMessage
+[9] RF/GiftGamePass (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/GiftGamePass
+[10] RE/ProductPurchaseCompleted (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ProductPurchaseCompleted
+[11] RE/PlaySound (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PlaySound
+[12] RE/PlayFishingEffect (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PlayFishingEffect
+[13] RE/ReplicateTextEffect (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ReplicateTextEffect
+[14] RE/DestroyEffect (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/DestroyEffect
+[15] RE/BaitSpawned (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/BaitSpawned
+[16] RE/FishCaught (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishCaught
+[17] RE/TextNotification (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/TextNotification
+[18] RF/PurchaseWeatherEvent (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseWeatherEvent
+[19] RE/ActivateEnchantingAltar (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ActivateEnchantingAltar
+[20] RE/UpdateEnchantState (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UpdateEnchantState
+[21] RE/RollEnchant (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/RollEnchant
+[22] RE/IncrementOnboardingStep (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/IncrementOnboardingStep
+[23] RF/UpdateAutoFishingState (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/UpdateAutoFishingState
+[24] RE/UpdateChargeState (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UpdateChargeState
+[25] RF/ChargeFishingRod (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/ChargeFishingRod
+[26] RF/CancelFishingInputs (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/CancelFishingInputs
+[27] RE/PlayVFX (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PlayVFX
+[28] RE/FishingStopped (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishingStopped
+[29] RF/RequestFishingMinigameStarted (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/RequestFishingMinigameStarted
+[30] RE/FishingCompleted (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishingCompleted
+[31] RE/FishingMinigameChanged (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishingMinigameChanged
+[32] RF/UpdateFishingRadar (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/UpdateFishingRadar
+[33] RE/ObtainedNewFishNotification (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ObtainedNewFishNotification
+[34] RF/PurchaseSkinCrate (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseSkinCrate
+[35] RE/RollSkinCrate (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/RollSkinCrate
+[36] RE/EquipRodSkin (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipRodSkin
+[37] RE/UnequipRodSkin (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UnequipRodSkin
+[38] RE/EquipItem (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipItem
+[39] RE/UnequipItem (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UnequipItem
+[40] RE/EquipBait (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipBait
+[41] RE/FavoriteItem (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FavoriteItem
+[42] RE/FavoriteStateChanged (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FavoriteStateChanged
+[43] RE/UnequipToolFromHotbar (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UnequipToolFromHotbar
+[44] RE/EquipToolFromHotbar (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipToolFromHotbar
+[45] RF/SellItem (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/SellItem
+[46] RF/SellAllItems (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/SellAllItems
+[47] RF/PurchaseFishingRod (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseFishingRod
+[48] RF/PurchaseBait (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseBait
+[49] RF/PurchaseGear (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseGear
+[50] RE/CancelPrompt (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/CancelPrompt
+[51] RE/FeatureUnlocked (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FeatureUnlocked
+[52] RE/ChangeSetting (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ChangeSetting
+[53] RF/PurchaseBoat (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseBoat
+[54] RF/SpawnBoat (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/SpawnBoat
+[55] RF/DespawnBoat (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/DespawnBoat
+[56] RE/BoatChanged (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/BoatChanged
+[57] RE/VerifyGroupReward (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/VerifyGroupReward
+[58] RF/ConsumePotion (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/ConsumePotion
+[59] RF/RedeemChristmasItems (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/RedeemChristmasItems
+[60] RF/EquipOxygenTank (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/EquipOxygenTank
+[61] RF/UnequipOxygenTank (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/UnequipOxygenTank
+[62] RF/ClaimDailyLogin (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/ClaimDailyLogin
+[63] RE/RecievedDailyRewards (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/RecievedDailyRewards
+[64] RE/ReconnectPlayer (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ReconnectPlayer
+[65] RF/CanSendTrade (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/CanSendTrade
+[66] RF/InitiateTrade (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/InitiateTrade
+[67] RF/AwaitTradeResponse (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/AwaitTradeResponse
+[68] RF/RedeemCode (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/RedeemCode
+[69] RE/ReplicateCutscene (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ReplicateCutscene
+[70] RE/StopCutscene (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/StopCutscene
+[71] RF/PromptFavoriteGame (RemoteFunction): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PromptFavoriteGame
+[72] RE/ClaimNotification (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ClaimNotification
+[73] RE/BlackoutScreen (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/BlackoutScreen
+[74] RE/ElevatorStateUpdated (RemoteEvent): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ElevatorStateUpdated
+[75] Added (RemoteEvent): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Added
+[76] Removed (RemoteEvent): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Removed
+[77] Update (RemoteEvent): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Update
+[78] UpdateReplicateTo (RemoteEvent): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.UpdateReplicateTo
+[79] Set (RemoteEvent): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Set
+[80] ArrayUpdate (RemoteEvent): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.ArrayUpdate
+
+=== COMPLETE FISHING OBJECTS LIST ===
+[1] ReclassFishProjectile (ModuleScript) in ReplicatedStorage
+[2] Baits (ModuleScript) in ReplicatedStorage
+[3] Starter Bait (ModuleScript) in ReplicatedStorage
+[4] Chroma Bait (ModuleScript) in ReplicatedStorage
+[5] Circle outline (ParticleEmitter) in ReplicatedStorage
+[6] Gold Bait (ModuleScript) in ReplicatedStorage
+[7] Circle outline (ParticleEmitter) in ReplicatedStorage
+[8] Hyper Bait (ModuleScript) in ReplicatedStorage
+[9] Circle outline (ParticleEmitter) in ReplicatedStorage
+[10] Luck Bait (ModuleScript) in ReplicatedStorage
+[11] Midnight Bait (ModuleScript) in ReplicatedStorage
+[12] Beach Ball Bait (ModuleScript) in ReplicatedStorage
+[13] Topwater Bait (ModuleScript) in ReplicatedStorage
+[14] Anchor Bait (ModuleScript) in ReplicatedStorage
+[15] Ornament Bait (ModuleScript) in ReplicatedStorage
+[16] Jolly Bait (ModuleScript) in ReplicatedStorage
+[17] Frozen Bait (ModuleScript) in ReplicatedStorage
+[18] Dark Matter Bait (ModuleScript) in ReplicatedStorage
+[19] Circle outline (ParticleEmitter) in ReplicatedStorage
+[20] Contracting lines (ParticleEmitter) in ReplicatedStorage
+[21] Corrupt Bait (ModuleScript) in ReplicatedStorage
+[22] Circle outline (ParticleEmitter) in ReplicatedStorage
+[23] Reeler I (ModuleScript) in ReplicatedStorage
+[24] !!! Chrome Rod (ModuleScript) in ReplicatedStorage
+[25] Rod (MeshPart) in ReplicatedStorage
+[26] lines (ParticleEmitter) in ReplicatedStorage
+[27] lines (ParticleEmitter) in ReplicatedStorage
+[28] !!! Lucky Rod (ModuleScript) in ReplicatedStorage
+[29] Rod (MeshPart) in ReplicatedStorage
+[30] !!! Magma Rod (ModuleScript) in ReplicatedStorage
+[31] Rod_Lava (MeshPart) in ReplicatedStorage
+[32] Rod_Rock (MeshPart) in ReplicatedStorage
+[33] !!! Starter Rod (ModuleScript) in ReplicatedStorage
+[34] Reel_Wood (MeshPart) in ReplicatedStorage
+[35] Rod_Wood (MeshPart) in ReplicatedStorage
+[36] Rod_Metal (MeshPart) in ReplicatedStorage
+[37] !!! Steampunk Rod (ModuleScript) in ReplicatedStorage
+[38] Neon_Reel (MeshPart) in ReplicatedStorage
+[39] Rod (MeshPart) in ReplicatedStorage
+[40] !!! Hyper Rod (ModuleScript) in ReplicatedStorage
+[41] Rod (MeshPart) in ReplicatedStorage
+[42] !!! Gold Rod (ModuleScript) in ReplicatedStorage
+[43] Rod (MeshPart) in ReplicatedStorage
+[44] !!! Lava Rod (ModuleScript) in ReplicatedStorage
+[45] Reel_Wood (MeshPart) in ReplicatedStorage
+[46] Rod_Wood (MeshPart) in ReplicatedStorage
+[47] Rod_Metal (MeshPart) in ReplicatedStorage
+[48] Boa Angelfish (ModuleScript) in ReplicatedStorage
+[49] Clownfish (ModuleScript) in ReplicatedStorage
+[50] Cow Clownfish (ModuleScript) in ReplicatedStorage
+[51] Darwin Clownfish (ModuleScript) in ReplicatedStorage
+[52] Enchanted Angelfish (ModuleScript) in ReplicatedStorage
+[53] Flame Angelfish (ModuleScript) in ReplicatedStorage
+[54] Korean Angelfish (ModuleScript) in ReplicatedStorage
+[55] Maze Angelfish (ModuleScript) in ReplicatedStorage
+[56] Fish-Award-Base (MeshPart) in ReplicatedStorage
+[57] Bandit Angelfish (ModuleScript) in ReplicatedStorage
+[58] Scissortail Dartfish (ModuleScript) in ReplicatedStorage
+[59] Skunk Tilefish (ModuleScript) in ReplicatedStorage
+[60] White Clownfish (ModuleScript) in ReplicatedStorage
+[61] Yello Damselfish (ModuleScript) in ReplicatedStorage
+[62] Yellowstate Angelfish (ModuleScript) in ReplicatedStorage
+[63] !!! Carbon Rod (ModuleScript) in ReplicatedStorage
+[64] Carbon Rod (Tool) in ReplicatedStorage
+[65] Reel (MeshPart) in ReplicatedStorage
+[66] !!! Gingerbread Rod (ModuleScript) in ReplicatedStorage
+[67] !!! Ice Rod (ModuleScript) in ReplicatedStorage
+[68] Ice Rod (Tool) in ReplicatedStorage
+[69] Reel_Wood (MeshPart) in ReplicatedStorage
+[70] Rod_Wood (MeshPart) in ReplicatedStorage
+[71] Rod_Metal (MeshPart) in ReplicatedStorage
+[72] !!! Luck Rod (ModuleScript) in ReplicatedStorage
+[73] Luck Rod (Tool) in ReplicatedStorage
+[74] Reel (MeshPart) in ReplicatedStorage
+[75] !!! Midnight Rod (ModuleScript) in ReplicatedStorage
+[76] Midnight Rod (Tool) in ReplicatedStorage
+[77] Reel (MeshPart) in ReplicatedStorage
+[78] Fishing Radar (ModuleScript) in ReplicatedStorage
+[79] !!! Ghostfinn Rod (ModuleScript) in ReplicatedStorage
+[80] Lines2 (ParticleEmitter) in ReplicatedStorage
+[81] !!! Toy Rod (ModuleScript) in ReplicatedStorage
+[82] Reel_Wood (MeshPart) in ReplicatedStorage
+[83] Rod_Wood (MeshPart) in ReplicatedStorage
+[84] Rod_Metal (MeshPart) in ReplicatedStorage
+[85] !!! Grass Rod (ModuleScript) in ReplicatedStorage
+[86] Reel_Wood (MeshPart) in ReplicatedStorage
+[87] Rod_Wood (MeshPart) in ReplicatedStorage
+[88] Rod_Metal (MeshPart) in ReplicatedStorage
+[89] Slurpfish Chromis (ModuleScript) in ReplicatedStorage
+[90] Gingerbread Clownfish (ModuleScript) in ReplicatedStorage
+[91] Meshes/Gingerbread-Clownfish_Clownfish.011 (MeshPart) in ReplicatedStorage
+[92] Meshes/Gingerbread-Clownfish_Clownfish.004 (MeshPart) in ReplicatedStorage
+[93] Meshes/Gingerbread-Clownfish_Circle.015 (MeshPart) in ReplicatedStorage
+[94] Meshes/Gingerbread-Clownfish_Circle.017 (MeshPart) in ReplicatedStorage
+[95] Meshes/Gingerbread-Clownfish_Clownfish.005 (MeshPart) in ReplicatedStorage
+[96] Meshes/Gingerbread-Clownfish_Circle.016 (MeshPart) in ReplicatedStorage
+[97] Meshes/Gingerbread-Clownfish_Clownfish.009 (MeshPart) in ReplicatedStorage
+[98] Meshes/Gingerbread-Clownfish_Clownfish.012 (MeshPart) in ReplicatedStorage
+[99] Meshes/Gingerbread-Clownfish_Clownfish.010 (MeshPart) in ReplicatedStorage
+[100] Festive Pufferfish (ModuleScript) in ReplicatedStorage
+[101] !!! Candy Cane Rod (ModuleScript) in ReplicatedStorage
+[102] CandycaneRod_L1 (MeshPart) in ReplicatedStorage
+[103] CandycaneRod_L2 (MeshPart) in ReplicatedStorage
+[104] CandycaneRod_L3 (MeshPart) in ReplicatedStorage
+[105] CandycaneRod_Base (MeshPart) in ReplicatedStorage
+[106] CandycaneRod_Handle (MeshPart) in ReplicatedStorage
+[107] CandycaneRod_Reel (MeshPart) in ReplicatedStorage
+[108] CandycaneRod_String (MeshPart) in ReplicatedStorage
+[109] !!! Christmas Tree Rod (ModuleScript) in ReplicatedStorage
+[110] ChristmasTreeRod_L2 (MeshPart) in ReplicatedStorage
+[111] ChristmasTreeRod_L1 (MeshPart) in ReplicatedStorage
+[112] ChristmasTreeRod_L3 (MeshPart) in ReplicatedStorage
+[113] ChristmasTreeRod_Base (MeshPart) in ReplicatedStorage
+[114] ChristmasTreeRod_Handle (MeshPart) in ReplicatedStorage
+[115] ChristmasTreeRod_Reel (MeshPart) in ReplicatedStorage
+[116] ChristmasTreeRod_String (MeshPart) in ReplicatedStorage
+[117] !!! Demascus Rod (ModuleScript) in ReplicatedStorage
+[118] Demascus Rod (Tool) in ReplicatedStorage
+[119] Reel (MeshPart) in ReplicatedStorage
+[120] !!! Frozen Rod (ModuleScript) in ReplicatedStorage
+[121] Blumato Clownfish (ModuleScript) in ReplicatedStorage
+[122] Conspi Angelfish (ModuleScript) in ReplicatedStorage
+[123] Lined Cardinal Fish (ModuleScript) in ReplicatedStorage
+[124] Masked Angelfish (ModuleScript) in ReplicatedStorage
+[125] Watanabei Angelfish (ModuleScript) in ReplicatedStorage
+[126] Fish-Gem (MeshPart) in ReplicatedStorage
+[127] Fish-Award-Base (MeshPart) in ReplicatedStorage
+[128] Fish-Award-Base (MeshPart) in ReplicatedStorage
+[129] Fish-Gem (MeshPart) in ReplicatedStorage
+[130] Fish-Award-Base (MeshPart) in ReplicatedStorage
+[131] Ballina Angelfish (ModuleScript) in ReplicatedStorage
+[132] !!! Cute Rod (ModuleScript) in ReplicatedStorage
+[133] VdayRod2_Base (MeshPart) in ReplicatedStorage
+[134] VdayRod2_Handle (MeshPart) in ReplicatedStorage
+[135] !!! Angelic Rod (ModuleScript) in ReplicatedStorage
+[136] VdayRod1_Base (MeshPart) in ReplicatedStorage
+[137] VdayRod1_Handle (MeshPart) in ReplicatedStorage
+[138] !!! Astral Rod (ModuleScript) in ReplicatedStorage
+[139] Rod (MeshPart) in ReplicatedStorage
+[140] Rod_Star (MeshPart) in ReplicatedStorage
+[141] Rod_String (MeshPart) in ReplicatedStorage
+[142] !!! Ares Rod (ModuleScript) in ReplicatedStorage
+[143] AresRod (MeshPart) in ReplicatedStorage
+[144] AresRod_Handle (MeshPart) in ReplicatedStorage
+[145] !!! Ghoul Rod (ModuleScript) in ReplicatedStorage
+[146] GhoulRod (MeshPart) in ReplicatedStorage
+[147] GhoulRod_Handle (MeshPart) in ReplicatedStorage
+[148] GreenChromeRod_Handle (MeshPart) in ReplicatedStorage
+[149] GreenChromeRod (MeshPart) in ReplicatedStorage
+[150] thin line (ParticleEmitter) in ReplicatedStorage
+[151] thin line (ParticleEmitter) in ReplicatedStorage
+[152] Rod_Strings.003 (MeshPart) in ReplicatedStorage
+[153] LightsaberRod_Neon (MeshPart) in ReplicatedStorage
+[154] LightsaberRod (MeshPart) in ReplicatedStorage
+[155] LightsaberRod_Handle (MeshPart) in ReplicatedStorage
+[156] Reel_Strings.002 (MeshPart) in ReplicatedStorage
+[157] Rod_Strings.002 (MeshPart) in ReplicatedStorage
+[158] Reel.002 (MeshPart) in ReplicatedStorage
+[159] Reel.003 (MeshPart) in ReplicatedStorage
+[160] Reel_Strings.002 (MeshPart) in ReplicatedStorage
+[161] FuturisticRod (MeshPart) in ReplicatedStorage
+[162] FuturisticRod_Handle (MeshPart) in ReplicatedStorage
+[163] Pilot Fish (ModuleScript) in ReplicatedStorage
+[164] Pufferfish (ModuleScript) in ReplicatedStorage
+[165] Racoon Butterfly Fish (ModuleScript) in ReplicatedStorage
+[166] Reel.004 (MeshPart) in ReplicatedStorage
+[167] Reel_Strings.002 (MeshPart) in ReplicatedStorage
+[168] Worm Fish (ModuleScript) in ReplicatedStorage
+[169] Viperfish (ModuleScript) in ReplicatedStorage
+[170] Spotted Lantern Fish (ModuleScript) in ReplicatedStorage
+[171] Monk Fish (ModuleScript) in ReplicatedStorage
+[172] Jellyfish (ModuleScript) in ReplicatedStorage
+[173] Boar Fish (ModuleScript) in ReplicatedStorage
+[174] Blob Fish (ModuleScript) in ReplicatedStorage
+[175] Angler Fish (ModuleScript) in ReplicatedStorage
+[176] Dead Fish (ModuleScript) in ReplicatedStorage
+[177] Skeleton Fish (ModuleScript) in ReplicatedStorage
+[178] Swordfish (ModuleScript) in ReplicatedStorage
+[179] Outline2 (ParticleEmitter) in ReplicatedStorage
+[180] Outline1 (ParticleEmitter) in ReplicatedStorage
+[181] !!! Angler Rod (ModuleScript) in ReplicatedStorage
+[182] Ghost Worm Fish (ModuleScript) in ReplicatedStorage
+[183] LinearAttachment (Attachment) in ReplicatedStorage
+[184] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[185] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[186] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[187] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[188] Fishing Boat (ModuleScript) in ReplicatedStorage
+[189] Fishing Boat (Model) in ReplicatedStorage
+[190] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[191] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[192] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[193] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[194] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[195] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[196] LinearAttachment (Attachment) in ReplicatedStorage
+[197] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[198] LinearAttachment (Attachment) in ReplicatedStorage
+[199] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[200] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[201] LinearVelocity (LinearVelocity) in ReplicatedStorage
+[202] giverods (ModuleScript) in ReplicatedStorage
+[203] wiperods (ModuleScript) in ReplicatedStorage
+[204] GiftProducts (ModuleScript) in ReplicatedStorage
+[205] FishingRodModifiers (ModuleScript) in ReplicatedStorage
+[206] FishingCastText (ModuleScript) in ReplicatedStorage
+[207] FishWeightChances (ModuleScript) in ReplicatedStorage
+[208] RaycastUtility (ModuleScript) in ReplicatedStorage
+[209] Products (Folder) in ReplicatedStorage
+[210] CoinProducts (ModuleScript) in ReplicatedStorage
+[211] ItemProducts (ModuleScript) in ReplicatedStorage
+[212] DoubleLuckProducts (ModuleScript) in ReplicatedStorage
+[213] CandyCaneProducts (ModuleScript) in ReplicatedStorage
+[214] Net (ModuleScript) in ReplicatedStorage
+[215] FastCastRedux (ModuleScript) in ReplicatedStorage
+[216] MersenneTwister (ModuleScript) in ReplicatedStorage
+[217] sleitnick_net@0.2.0 (Folder) in ReplicatedStorage
+[218] net (ModuleScript) in ReplicatedStorage
+[219] RE/PromptProductPurchase (RemoteEvent) in ReplicatedStorage
+[220] RE/ProductPurchaseFinished (RemoteEvent) in ReplicatedStorage
+[221] RE/ProductPurchaseCompleted (RemoteEvent) in ReplicatedStorage
+[222] RE/PlayFishingEffect (RemoteEvent) in ReplicatedStorage
+[223] RE/BaitSpawned (RemoteEvent) in ReplicatedStorage
+[224] RE/FishCaught (RemoteEvent) in ReplicatedStorage
+[225] RF/UpdateAutoFishingState (RemoteFunction) in ReplicatedStorage
+[226] RF/ChargeFishingRod (RemoteFunction) in ReplicatedStorage
+[227] RF/CancelFishingInputs (RemoteFunction) in ReplicatedStorage
+[228] RE/FishingStopped (RemoteEvent) in ReplicatedStorage
+[229] RF/RequestFishingMinigameStarted (RemoteFunction) in ReplicatedStorage
+[230] RE/FishingCompleted (RemoteEvent) in ReplicatedStorage
+[231] RE/FishingMinigameChanged (RemoteEvent) in ReplicatedStorage
+[232] RF/UpdateFishingRadar (RemoteFunction) in ReplicatedStorage
+[233] RE/ObtainedNewFishNotification (RemoteEvent) in ReplicatedStorage
+[234] RE/EquipRodSkin (RemoteEvent) in ReplicatedStorage
+[235] RE/UnequipRodSkin (RemoteEvent) in ReplicatedStorage
+[236] RE/EquipBait (RemoteEvent) in ReplicatedStorage
+[237] RF/SellItem (RemoteFunction) in ReplicatedStorage
+[238] RF/SellAllItems (RemoteFunction) in ReplicatedStorage
+[239] RF/PurchaseFishingRod (RemoteFunction) in ReplicatedStorage
+[240] RF/PurchaseBait (RemoteFunction) in ReplicatedStorage
+[241] Network (ModuleScript) in ReplicatedStorage
+[242] LifecycleHooks (ModuleScript) in ReplicatedStorage
+[243] etithespirit_fastcastredux@13.2.1 (Folder) in ReplicatedStorage
+[244] fastcastredux (ModuleScript) in ReplicatedStorage
+[245] ActiveCast (ModuleScript) in ReplicatedStorage
+[246] FishingController (ModuleScript) in ReplicatedStorage
+[247] Fishing Radar (ModuleScript) in ReplicatedStorage
+[248] animateBobber (ModuleScript) in ReplicatedStorage
+[249] EquipRodNotification (Frame) in ReplicatedStorage
+[250] RodShopController (ModuleScript) in ReplicatedStorage
+[251] BaitShopController (ModuleScript) in ReplicatedStorage
+[252] AutoFishingController (ModuleScript) in ReplicatedStorage
+[253] Lines (Frame) in ReplicatedStorage
+[254] Fishing (ModuleScript) in ReplicatedStorage
+[255] Bait Dive (Part) in ReplicatedStorage
+[256] Lines (ParticleEmitter) in ReplicatedStorage
+[257] Ghoul Rod Dive (Part) in ReplicatedStorage
+[258] DevProductPurchase (ModuleScript) in ReplicatedStorage
+[259] DevProductPrice (ModuleScript) in ReplicatedStorage
+[260] HardFishReel (Animation) in ReplicatedStorage
+[261] CaughtFish1 (Animation) in ReplicatedStorage
+[262] HoldFish1 (Animation) in ReplicatedStorage
+[263] HoldFish2 (Animation) in ReplicatedStorage
+[264] EasyFishReelStart (Animation) in ReplicatedStorage
+[265] HoldFish3 (Animation) in ReplicatedStorage
+[266] FishingRodReelIdle (Animation) in ReplicatedStorage
+[267] FinishChargingRod1Hand (Animation) in ReplicatedStorage
+[268] EasyFishReel (Animation) in ReplicatedStorage
+[269] FishingFailure (Animation) in ReplicatedStorage
+[270] CastFromFullChargePosition1Hand (Animation) in ReplicatedStorage
+[271] FishingRodCharacterIdle2 (Animation) in ReplicatedStorage
+[272] StartChargingRod1Hand (Animation) in ReplicatedStorage
+[273] CoinProductsUtility (ModuleScript) in ReplicatedStorage
+[274] product (ModuleScript) in ReplicatedStorage
+[275] productBy (ModuleScript) in ReplicatedStorage
+[276] Lava Fisherman (Model) in ReplicatedStorage
+[277] AnglerFishHat (Accessory) in ReplicatedStorage
+[278] Lava Rod (Model) in ReplicatedStorage
+[279] Reel_Wood (MeshPart) in ReplicatedStorage
+[280] Rod_Wood (MeshPart) in ReplicatedStorage
+[281] Rod_Metal (MeshPart) in ReplicatedStorage
+[282] Silly Fisherman (Model) in ReplicatedStorage
+[283] AnglerFishHat (Accessory) in ReplicatedStorage
+[284] Starter Rod (Model) in ReplicatedStorage
+[285] Reel_Wood (MeshPart) in ReplicatedStorage
+[286] Rod_Wood (MeshPart) in ReplicatedStorage
+[287] Rod_Metal (MeshPart) in ReplicatedStorage
+[288] Lonely Fisherman (Model) in ReplicatedStorage
+[289] AnglerFishHat (Accessory) in ReplicatedStorage
+[290] Accessory (Fishers Hat) (Accessory) in ReplicatedStorage
+[291] Accessory (Fishers Hat) (Accessory) in ReplicatedStorage
+[292] Ghoul Rod (ModuleScript) in ReplicatedStorage
+[293] DefaultRod_New (Model) in Workspace
+[294] DefaultRod_New (Model) in Workspace
+[295] Bobber (Model) in Workspace
+[296] Bobber (Model) in Workspace
+[297] DefaultRod_New (Model) in Workspace
+[298] Bobber (Model) in Workspace
+[299] DefaultRod_New (Model) in Workspace
+[300] DefaultRod_New (Model) in Workspace
+[301] DefaultRod_New (Model) in Workspace
+[302] Bobber (Model) in Workspace
+[303] Bobber (Model) in Workspace
+[304] Bobber (Model) in Workspace
+[305] Bobber (Model) in Workspace
+[306] Bobber (Model) in Workspace
+[307] Clownfish (Model) in Workspace
+[308] Rod (MeshPart) in Workspace
+[309] Bait Green Variant (Part) in Workspace
+[310] Circle outline (ParticleEmitter) in Workspace
+[311] Rod (MeshPart) in Workspace
+[312] Bait Green (Part) in Workspace
+[313] Circle outline (ParticleEmitter) in Workspace
+[314] Gingerbread-Clownfish (Model) in Workspace
+[315] Gingerbread-Clownfish (Model) in Workspace
+[316] RodDisplay (Model) in Workspace
+[317] Fishing Rod Ruins (Model) in Workspace
+[318] Bait Dive (Part) in Workspace
+[319] Bait Dive (Part) in Workspace
+[320] Leaderboard - Monthly Caught Fish (Model) in Workspace
+[321] Leaderboard - Monthly Fishing Level (Model) in Workspace
+[322] Fishing Radar Stand (Model) in Workspace
+[323] Ares Rod Stand (Model) in Workspace
+[324] AresRod_Handle (MeshPart) in Workspace
+[325] AresRod (MeshPart) in Workspace
+[326] Angler Rod Stand (Model) in Workspace
+[327] Angler Rod (Model) in Workspace
+[328] Rods (Part) in Workspace
+[329] Selling (Part) in Workspace
+[330] SellPrompt (Attachment) in Workspace
+[331] SellPrompt (ProximityPrompt) in Workspace
+[332] SellAllPrompt (Attachment) in Workspace
+[333] SellAllPrompt (ProximityPrompt) in Workspace
+[334] Selling (Part) in Workspace
+[335] SellPrompt (Attachment) in Workspace
+[336] SellPrompt (ProximityPrompt) in Workspace
+[337] SellAllPrompt (Attachment) in Workspace
+[338] SellAllPrompt (ProximityPrompt) in Workspace
+[339] Selling (Part) in Workspace
+[340] SellPrompt (Attachment) in Workspace
+[341] SellPrompt (ProximityPrompt) in Workspace
+[342] SellAllPrompt (Attachment) in Workspace
+[343] SellAllPrompt (ProximityPrompt) in Workspace
+[344] Selling (Part) in Workspace
+[345] SellPrompt (Attachment) in Workspace
+[346] SellPrompt (ProximityPrompt) in Workspace
+[347] SellAllPrompt (Attachment) in Workspace
+[348] SellAllPrompt (ProximityPrompt) in Workspace
+[349] Selling (Part) in Workspace
+[350] SellPrompt (Attachment) in Workspace
+[351] SellPrompt (ProximityPrompt) in Workspace
+[352] SellAllPrompt (Attachment) in Workspace
+[353] SellAllPrompt (ProximityPrompt) in Workspace
+[354] LinearVelocity (LinearVelocity) in Workspace
+[355] LinearVelocity (LinearVelocity) in Workspace
+[356] LinearVelocity (LinearVelocity) in Workspace
+[357] LinearVelocity (LinearVelocity) in Workspace
+[358] LinearVelocity (LinearVelocity) in Workspace
+[359] LinearVelocity (LinearVelocity) in Workspace
+[360] LinearVelocity (LinearVelocity) in Workspace
+[361] LinearVelocity (LinearVelocity) in Workspace
+[362] CharacterOutline (ModuleScript) in Workspace
+[363] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[364] Circle outline (ParticleEmitter) in Workspace
+[365] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[366] CharacterOutline (ModuleScript) in Workspace
+[367] Rod_Metal (MeshPart) in Workspace
+[368] Reel_Wood (MeshPart) in Workspace
+[369] Rod_Wood (MeshPart) in Workspace
+[370] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[371] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[372] CharacterOutline (ModuleScript) in Workspace
+[373] Rod_String (MeshPart) in Workspace
+[374] Rod_Star (MeshPart) in Workspace
+[375] Rod (MeshPart) in Workspace
+[376] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[377] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[378] Circle outline (ParticleEmitter) in Workspace
+[379] CharacterOutline (ModuleScript) in Workspace
+[380] Rod (MeshPart) in Workspace
+[381] Rod_Star (MeshPart) in Workspace
+[382] Rod_String (MeshPart) in Workspace
+[383] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[384] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[385] CharacterOutline (ModuleScript) in Workspace
+[386] Rod_Star (MeshPart) in Workspace
+[387] Rod (MeshPart) in Workspace
+[388] Rod_String (MeshPart) in Workspace
+[389] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[390] Circle outline (ParticleEmitter) in Workspace
+[391] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[392] CharacterOutline (ModuleScript) in Workspace
+[393] Rod (MeshPart) in Workspace
+[394] lines (ParticleEmitter) in Workspace
+[395] lines (ParticleEmitter) in Workspace
+[396] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[397] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[398] CharacterOutline (ModuleScript) in Workspace
+[399] Rod (MeshPart) in Workspace
+[400] Neon_Reel (MeshPart) in Workspace
+[401] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[402] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[403] CharacterOutline (ModuleScript) in Workspace
+[404] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[405] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[406] Rod_Wood (MeshPart) in Workspace
+[407] Rod_Metal (MeshPart) in Workspace
+[408] Reel_Wood (MeshPart) in Workspace
+[409] CharacterOutline (ModuleScript) in Workspace
+[410] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[411] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[412] CharacterOutline (ModuleScript) in Workspace
+[413] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[414] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[415] !!!FISHING_VIEW_MODEL!!! (Model) in Workspace
+[416] Rod_Metal (MeshPart) in Workspace
+[417] Rod_Wood (MeshPart) in Workspace
+[418] Reel_Wood (MeshPart) in Workspace
+[419] CharacterOutline (ModuleScript) in Workspace
+[420] Reel_Strings.002 (MeshPart) in Workspace
+[421] Reel.003 (MeshPart) in Workspace
+[422] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[423] Circle outline (ParticleEmitter) in Workspace
+[424] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[425] CharacterOutline (ModuleScript) in Workspace
+[426] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[427] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[428] Circle outline (ParticleEmitter) in Workspace
+[429] !!!FISHING_VIEW_MODEL!!! (Model) in Workspace
+[430] AresRod_Handle (MeshPart) in Workspace
+[431] AresRod (MeshPart) in Workspace
+[432] CharacterOutline (ModuleScript) in Workspace
+[433] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[434] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[435] Circle outline (ParticleEmitter) in Workspace
+[436] Rod (MeshPart) in Workspace
+[437] lines (ParticleEmitter) in Workspace
+[438] lines (ParticleEmitter) in Workspace
+[439] CharacterOutline (ModuleScript) in Workspace
+[440] !!!FISHING_BAIT_MODEL!!! (Part) in Workspace
+[441] !!!FISHING_LANTERN!!! (MeshPart) in Workspace
+[442] !!!FISHING_VIEW_MODEL!!! (Model) in Workspace
+[443] Rod_Wood (MeshPart) in Workspace
+[444] Reel_Wood (MeshPart) in Workspace
+[445] Rod_Metal (MeshPart) in Workspace
+[446] CharacterOutline (ModuleScript) in Character
+[447] !!!FISHING_LANTERN!!! (MeshPart) in Character
+[448] !!!FISHING_BAIT_MODEL!!! (Part) in Character
+[449] Circle outline (ParticleEmitter) in Character
+[450] !!!FISHING_VIEW_MODEL!!! (Model) in Character
+[451] AresRod_Handle (MeshPart) in Character
+[452] AresRod (MeshPart) in Character
+
+=== REMOTE CALL LOGS ===
+[1755345761.5623405] Unknown: No arguments
+[1755345761.648604] Unknown: No arguments
+[1755345761.6496072] Unknown: No arguments
+[1755345761.649878] Unknown: No arguments
+[1755345761.7929177] Unknown: No arguments
+[1755345762.181593] Unknown: No arguments
+[1755345762.8704228] Unknown: No arguments
+[1755345763.0302699] Unknown: No arguments
+[1755345763.1902142] Unknown: No arguments
+[1755345763.5177822] Unknown: No arguments
+[1755345763.614749] Unknown: No arguments
+[1755345763.6154199] Unknown: No arguments
+[1755345763.7159479] Unknown: No arguments
+[1755345763.7164428] Unknown: No arguments
+[1755345763.7166317] Unknown: No arguments
+[1755345763.7168546] Unknown: No arguments
+[1755345763.7188108] Unknown: No arguments
+[1755345763.8991413] Unknown: No arguments
+[1755345763.9851296] Unknown: No arguments
+[1755345764.0986562] Unknown: No arguments
+[1755345764.1976588] Unknown: No arguments
+[1755345764.4304693] Unknown: No arguments
+[1755345764.4327908] Unknown: No arguments
+[1755345764.6431904] Unknown: No arguments
+[1755345764.7220144] Unknown: No arguments
+[1755345764.9200184] Unknown: No arguments
+[1755345765.594483] Unknown: No arguments
+[1755345765.664085] Unknown: No arguments
+[1755345765.6654136] Unknown: No arguments
+[1755345765.6656344] Unknown: No arguments
+[1755345765.9442573] Unknown: No arguments
+[1755345766.1279755] Unknown: No arguments
+[1755345766.493369] Unknown: No arguments
+[1755345766.5958238] Unknown: No arguments
+[1755345767.3790164] Unknown: No arguments
+[1755345767.37944] Unknown: No arguments
+[1755345767.3828566] Unknown: No arguments
+[1755345767.4962585] Unknown: No arguments
+[1755345767.6461344] Unknown: No arguments
+[1755345767.7394025] Unknown: No arguments
+[1755345767.746542] Unknown: No arguments
+[1755345767.9790137] Unknown: No arguments
+[1755345768.1904185] Unknown: No arguments
+[1755345768.1907632] Unknown: No arguments
+[1755345768.410207] Unknown: No arguments
+[1755345768.9251528] Unknown: No arguments
+[1755345769.4558191] Unknown: No arguments
+[1755345769.4727004] Unknown: No arguments
+[1755345769.488633] Unknown: No arguments
+[1755345769.4909618] Unknown: No arguments
+[1755345769.7017531] Unknown: No arguments
+[1755345769.7521477] Unknown: No arguments
+[1755345769.7525895] Unknown: No arguments
+[1755345769.8331811] Unknown: No arguments
+[1755345769.906321] Unknown: No arguments
+[1755345770.1333728] Unknown: No arguments
+[1755345770.13586] Unknown: No arguments
+[1755345770.7277036] Unknown: No arguments
+[1755345771.202979] Unknown: No arguments
+[1755345771.568536] Unknown: No arguments
+[1755345771.6531258] Unknown: No arguments
+[1755345771.784529] Unknown: No arguments
+[1755345771.7849588] Unknown: No arguments
+[1755345771.7850883] Unknown: No arguments
+[1755345771.9499145] Unknown: No arguments
+[1755345772.116098] Unknown: No arguments
+[1755345772.3087523] Unknown: No arguments
+[1755345772.6356978] Unknown: No arguments
+[1755345772.6865842] Unknown: No arguments
+[1755345772.8177838] Unknown: No arguments
+[1755345773.0034914] Unknown: No arguments
+[1755345773.003767] Unknown: No arguments
+[1755345773.1351757] Unknown: No arguments
+[1755345773.232056] Unknown: No arguments
+[1755345773.4597607] Unknown: No arguments
+[1755345773.6922426] Unknown: No arguments
+[1755345773.8004794] Unknown: No arguments
+[1755345773.8008432] Unknown: No arguments
+[1755345773.8572495] Unknown: No arguments
+[1755345774.0862575] Unknown: No arguments
+[1755345774.5572026] Unknown: No arguments
+[1755345775.132701] Unknown: No arguments
+[1755345775.133144] Unknown: No arguments
+[1755345775.2632308] Unknown: No arguments
+[1755345775.3799057] Unknown: No arguments
+[1755345775.4630556] Unknown: No arguments
+[1755345775.6235623] Unknown: No arguments
+[1755345775.664195] Unknown: No arguments
+[1755345775.735993] Unknown: No arguments
+[1755345775.817656] Unknown: No arguments
+[1755345775.8181467] Unknown: No arguments
+[1755345775.943143] Unknown: No arguments
+[1755345776.3206463] Unknown: No arguments
+[1755345776.8925276] Unknown: No arguments
+[1755345776.8940485] Unknown: No arguments
+[1755345777.233107] Unknown: No arguments
+[1755345777.4283867] Unknown: No arguments
+[1755345777.6065223] Unknown: No arguments
+[1755345777.68335] Unknown: No arguments
+[1755345777.867002] Unknown: No arguments
+[1755345777.9053571] Unknown: No arguments
+[1755345777.9061217] Unknown: No arguments
+[1755345778.0104911] Unknown: No arguments
+[1755345778.6078598] Unknown: No arguments
+[1755345778.7454958] Unknown: No arguments
+[1755345779.448686] Unknown: No arguments
+[1755345779.714428] Unknown: No arguments
+[1755345779.7472527] Unknown: No arguments
+[1755345779.9532626] Unknown: No arguments
+[1755345779.9535606] Unknown: No arguments
+[1755345780.1739123] Unknown: No arguments
+[1755345780.439044] Unknown: No arguments
+[1755345780.6737077] Unknown: No arguments
+[1755345780.683674] Unknown: No arguments
+[1755345780.8238823] Unknown: No arguments
+[1755345781.0823598] Unknown: No arguments
+[1755345781.6783857] Unknown: No arguments
+[1755345781.7702422] Unknown: No arguments
+[1755345781.9470422] Unknown: No arguments
+[1755345781.953506] Unknown: No arguments
+[1755345781.954256] Unknown: No arguments
+[1755345781.954653] Unknown: No arguments
+[1755345781.9548285] Unknown: No arguments
+[1755345782.2022429] Unknown: No arguments
+[1755345782.2029839] Unknown: No arguments
+[1755345782.2067437] Unknown: No arguments
+[1755345782.2070699] Unknown: No arguments
+[1755345782.2099864] Unknown: No arguments
+[1755345782.3714645] Unknown: No arguments
+[1755345782.9535007] Unknown: No arguments
+[1755345782.9543622] Unknown: No arguments
+[1755345783.0993738] Unknown: No arguments
+[1755345783.3672981] Unknown: No arguments
+[1755345783.3678284] Unknown: No arguments
+[1755345783.3704116] Unknown: No arguments
+[1755345783.5292275] Unknown: No arguments
+[1755345783.689757] Unknown: No arguments
+[1755345783.9346828] Unknown: No arguments
+[1755345783.9352615] Unknown: No arguments
+[1755345784.299977] Unknown: No arguments
+[1755345784.50789] Unknown: No arguments
+[1755345784.892585] Unknown: No arguments
+[1755345784.9543293] Unknown: No arguments
+[1755345784.9549792] Unknown: No arguments
+[1755345785.1081438] Unknown: No arguments
+[1755345785.2447436] Unknown: No arguments
+[1755345785.401278] Unknown: No arguments
+[1755345785.409705] Unknown: No arguments
+[1755345785.4146807] Unknown: No arguments
+[1755345785.41608] Unknown: No arguments
+[1755345785.5541341] Unknown: No arguments
+[1755345785.7337224] Unknown: No arguments
+[1755345785.762163] Unknown: No arguments
+[1755345785.7989168] Unknown: No arguments
+[1755345785.850505] Unknown: No arguments
+[1755345785.886746] Unknown: No arguments
+[1755345785.9810534] Unknown: No arguments
+[1755345785.9818356] Unknown: No arguments
+[1755345785.9819808] Unknown: No arguments
+[1755345786.0737972] Unknown: No arguments
+[1755345786.8039918] Unknown: No arguments
+[1755345786.9819353] Unknown: No arguments
+[1755345787.7301564] Unknown: No arguments
+[1755345787.8229904] Unknown: No arguments
+[1755345787.8652751] Unknown: No arguments
+[1755345787.9588873] Unknown: No arguments
+[1755345788.0470617] Unknown: No arguments
+[1755345788.0474212] Unknown: No arguments
+[1755345789.0305457] Unknown: No arguments
+[1755345789.0667365] Unknown: No arguments
+[1755345789.3098059] Unknown: No arguments
+[1755345789.5642595] Unknown: No arguments
+[1755345789.7397609] Unknown: No arguments
+[1755345790.0710852] Unknown: No arguments
+[1755345790.071672] Unknown: No arguments
+[1755345790.4281785] Unknown: No arguments
+[1755345790.428526] Unknown: No arguments
+[1755345790.6627064] Unknown: No arguments
+[1755345790.6653414] Unknown: No arguments
+[1755345790.8152897] Unknown: No arguments
+[1755345790.9417315] Unknown: No arguments
+[1755345791.0980551] Unknown: No arguments
+[1755345791.643347] Unknown: No arguments
+[1755345791.7008605] Unknown: No arguments
+[1755345791.7320092] Unknown: No arguments
+[1755345791.8138936] Unknown: No arguments
+[1755345791.8143408] Unknown: No arguments
+[1755345791.9148548] Unknown: No arguments
+[1755345791.9773011] Unknown: No arguments
+[1755345792.1306515] Unknown: No arguments
+[1755345792.1310048] Unknown: No arguments
+[1755345792.472546] Unknown: No arguments
+[1755345793.4156852] Unknown: No arguments
+[1755345793.5876827] Unknown: No arguments
+[1755345793.7648206] Unknown: No arguments
+[1755345794.1327124] Unknown: No arguments
+[1755345794.1331694] Unknown: No arguments
+[1755345794.1335738] Unknown: No arguments
+[1755345794.607668] Unknown: No arguments
+[1755345794.6080134] Unknown: No arguments
+[1755345794.83075] Unknown: No arguments
+[1755345794.9715211] Unknown: No arguments
+[1755345795.0985384] Unknown: No arguments
+[1755345795.3941345] Unknown: No arguments
+[1755345795.429604] Unknown: No arguments
+[1755345795.4647152] Unknown: No arguments
+[1755345795.9625874] Unknown: No arguments
+[1755345795.9628837] Unknown: No arguments
+[1755345795.9630466] Unknown: No arguments
+[1755345796.0807705] Unknown: No arguments
+[1755345796.0812194] Unknown: No arguments
+
+=== DETAILED ANALYSIS ===
+Key Remotes for AutoFish: Look for 'Cast', 'Reel', 'Sell' patterns
+Important Objects: Check ReclassFishProjectile, Baits, Starter Bait
+Next Steps: Test remote calls with identified fishing functions
+Report Generated: FishIt_Advanced_Debug_20250816_120316.txt

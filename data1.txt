@@ -1,0 +1,456 @@
+=== FISH IT COMPLETE GAME EXPLORATION DATA ===
+Game PlaceId: 121864768012064
+Game Name: Fish It
+Export Time: 2025-08-16 18:02:20
+Total Analysis Items: 324
+
+=== EXPLORATION STATISTICS ===
+Total Remotes Found: 80
+Total Fish Types Found: 148
+Total Bait Types Found: 21
+Total Fishing Rods Found: 75
+Total Boats Found: 11
+Total NPCs Found: 1
+Total Areas Found: 1577
+Total Inventory Tools: 0
+Net Framework Items: 1
+
+=== COMPLETE REMOTES LIST (by Category) ===
+
+--- OTHER REMOTES (34) ---
+[1] CmdrFunction (Function): ReplicatedStorage.CmdrClient.CmdrFunction
+[2] CmdrEvent (Event): ReplicatedStorage.CmdrClient.CmdrEvent
+[3] UserOwnsGamePass (Function): ReplicatedStorage.Shared.GamePassUtility.UserOwnsGamePass
+[4] RE/DisplaySystemMessage (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/DisplaySystemMessage
+[5] RE/PlaySound (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PlaySound
+[6] RE/ReplicateTextEffect (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ReplicateTextEffect
+[7] RE/DestroyEffect (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/DestroyEffect
+[8] RE/TextNotification (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/TextNotification
+[9] RE/IncrementOnboardingStep (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/IncrementOnboardingStep
+[10] RE/UpdateChargeState (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UpdateChargeState
+[11] RE/PlayVFX (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PlayVFX
+[12] RE/RollSkinCrate (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/RollSkinCrate
+[13] RE/FavoriteStateChanged (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FavoriteStateChanged
+[14] RE/CancelPrompt (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/CancelPrompt
+[15] RE/FeatureUnlocked (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FeatureUnlocked
+[16] RE/ChangeSetting (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ChangeSetting
+[17] RE/VerifyGroupReward (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/VerifyGroupReward
+[18] RF/ConsumePotion (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/ConsumePotion
+[19] RF/ClaimDailyLogin (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/ClaimDailyLogin
+[20] RE/RecievedDailyRewards (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/RecievedDailyRewards
+[21] RE/ReconnectPlayer (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ReconnectPlayer
+[22] RF/RedeemCode (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/RedeemCode
+[23] RE/ReplicateCutscene (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ReplicateCutscene
+[24] RE/StopCutscene (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/StopCutscene
+[25] RF/PromptFavoriteGame (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PromptFavoriteGame
+[26] RE/ClaimNotification (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ClaimNotification
+[27] RE/BlackoutScreen (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/BlackoutScreen
+[28] RE/ElevatorStateUpdated (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ElevatorStateUpdated
+[29] Added (Event): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Added
+[30] Removed (Event): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Removed
+[31] Update (Event): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Update
+[32] UpdateReplicateTo (Event): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.UpdateReplicateTo
+[33] Set (Event): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.Set
+[34] ArrayUpdate (Event): ReplicatedStorage.Packages._Index.ytrev_replion@2.0.0-rc.3.replion.Remotes.ArrayUpdate
+
+--- VEHICLES REMOTES (3) ---
+[1] RF/SpawnBoat (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/SpawnBoat
+[2] RF/DespawnBoat (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/DespawnBoat
+[3] RE/BoatChanged (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/BoatChanged
+
+--- EQUIPMENT REMOTES (8) ---
+[1] RE/EquipItem (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipItem
+[2] RE/UnequipItem (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UnequipItem
+[3] RE/FavoriteItem (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FavoriteItem
+[4] RE/UnequipToolFromHotbar (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UnequipToolFromHotbar
+[5] RE/EquipToolFromHotbar (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipToolFromHotbar
+[6] RF/RedeemChristmasItems (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/RedeemChristmasItems
+[7] RF/EquipOxygenTank (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/EquipOxygenTank
+[8] RF/UnequipOxygenTank (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/UnequipOxygenTank
+
+--- FISHING REMOTES (20) ---
+[1] RE/PromptProductPurchase (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PromptProductPurchase
+[2] RE/ProductPurchaseFinished (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ProductPurchaseFinished
+[3] RE/ProductPurchaseCompleted (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ProductPurchaseCompleted
+[4] RE/PlayFishingEffect (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PlayFishingEffect
+[5] RE/BaitSpawned (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/BaitSpawned
+[6] RE/FishCaught (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishCaught
+[7] RF/UpdateAutoFishingState (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/UpdateAutoFishingState
+[8] RF/ChargeFishingRod (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/ChargeFishingRod
+[9] RF/CancelFishingInputs (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/CancelFishingInputs
+[10] RE/FishingStopped (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishingStopped
+[11] RF/RequestFishingMinigameStarted (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/RequestFishingMinigameStarted
+[12] RE/FishingCompleted (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishingCompleted
+[13] RE/FishingMinigameChanged (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/FishingMinigameChanged
+[14] RF/UpdateFishingRadar (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/UpdateFishingRadar
+[15] RE/ObtainedNewFishNotification (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ObtainedNewFishNotification
+[16] RE/EquipRodSkin (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipRodSkin
+[17] RE/UnequipRodSkin (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UnequipRodSkin
+[18] RE/EquipBait (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/EquipBait
+[19] RF/PurchaseFishingRod (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseFishingRod
+[20] RF/PurchaseBait (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseBait
+
+--- ECONOMY REMOTES (8) ---
+[1] RE/PromptGamePassPurchase (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PromptGamePassPurchase
+[2] RE/PromptPurchase (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/PromptPurchase
+[3] RF/PurchaseWeatherEvent (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseWeatherEvent
+[4] RF/PurchaseSkinCrate (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseSkinCrate
+[5] RF/SellItem (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/SellItem
+[6] RF/SellAllItems (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/SellAllItems
+[7] RF/PurchaseGear (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseGear
+[8] RF/PurchaseBoat (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/PurchaseBoat
+
+--- ENHANCEMENT REMOTES (3) ---
+[1] RE/ActivateEnchantingAltar (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/ActivateEnchantingAltar
+[2] RE/UpdateEnchantState (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/UpdateEnchantState
+[3] RE/RollEnchant (Event): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RE/RollEnchant
+
+--- TRADING REMOTES (4) ---
+[1] RF/GiftGamePass (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/GiftGamePass
+[2] RF/CanSendTrade (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/CanSendTrade
+[3] RF/InitiateTrade (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/InitiateTrade
+[4] RF/AwaitTradeResponse (Function): ReplicatedStorage.Packages._Index.sleitnick_net@0.2.0.net.RF/AwaitTradeResponse
+
+=== COMPLETE FISH DATA ===
+
+--- CURSED (1 items) ---
+[1] CursedScroll (Fish Model) - Model at Workspace.Islands.Tropical Grove.CursedScroll
+
+--- NEON (5 items) ---
+[1] Meshes/FI_Luck_Machine_Neon.001 (Fish Part/Mesh) - MeshPart at Workspace.Machines.Luck Machine.Neon.Meshes/FI_Luck_Machine_Neon.001
+[2] Meshes/FI_Luck_Machine_Neon.003 (Fish Part/Mesh) - MeshPart at Workspace.Machines.Luck Machine.Neon.Meshes/FI_Luck_Machine_Neon.003
+[3] Neon (Fish Object) - Folder at Workspace.Machines.Luck Machine.Neon
+[4] Meshes/FI_Luck_Machine_Neon.002 (Fish Part/Mesh) - MeshPart at Workspace.Machines.Luck Machine.Neon.Meshes/FI_Luck_Machine_Neon.002
+[5] UpperNeon (Fish Part/Mesh) - MeshPart at Workspace.Map.Shack.Crate1.UpperNeon
+
+--- TROPICAL (3 items) ---
+[1] Tropical Grove (Fish Part/Mesh) - Part at Workspace.!!!! ISLAND LOCATIONS !!!!.Tropical Grove
+[2] Tropical Grove (Fish Object) - Folder at Workspace.Zones.Tropical Grove
+[3] Tropical Grove (Fish Object) - Folder at Workspace.Islands.Tropical Grove
+
+--- EEL (1 items) ---
+[1] Water Wheel (Fish Model) - Model at Workspace.Map.Spinning.Water Wheel
+
+--- GENERAL FISH-RELATED (FISH) (11 items) ---
+[1] Meshes/fish-assets_Circle.003 (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Barrel.Meshes/fish-assets_Circle.003
+[2] Meshes/fish-assets_Cube.034 (Fish Part/Mesh) - MeshPart at Workspace.Machines.Shop.stool1.Meshes/fish-assets_Cube.034
+[3] Meshes/fish-assets_Circle.003 (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Barrel.Meshes/fish-assets_Circle.003
+[4] Meshes/fish-assets_Circle.003 (Fish Part/Mesh) - MeshPart at Workspace.Machines.Shop.Barrel.Meshes/fish-assets_Circle.003
+[5] Meshes/fish-assets_Circle.003 (Fish Part/Mesh) - MeshPart at Workspace.Machines.Shop.Barrel.Meshes/fish-assets_Circle.003
+[6] Silly Fisherman (Fish Model) - Model at Workspace.NPC.Silly Fisherman
+[7] Meshes/fish-assets_Circle.003 (Fish Part/Mesh) - MeshPart at Workspace.Machines.Shop.Barrel.Meshes/fish-assets_Circle.003
+[8] Leaderboard - Monthly Caught Fish (Fish Model) - Model at Workspace.! LEADERBOARDS !.Leaderboard - Monthly Caught Fish
+[9] AnglerFishHat (Fish Object) - Accessory at Workspace.NPC.Silly Fisherman.AnglerFishHat
+[10] Meshes/fish-assets_Circle.003 (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Barrel.Meshes/fish-assets_Circle.003
+[11] Meshes/fish-assets_Circle.003 (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Barrel.Meshes/fish-assets_Circle.003
+
+--- RAY (25 items) ---
+[1] Stingray Coral (Fish Object) - Folder at Workspace.Islands.Stingray Shores.Stingray Coral
+[2] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Inside.Stingray Shores
+[3] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Inside.Stingray Shores
+[4] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Inside.Stingray Shores
+[5] Stingray Shores (Fish Object) - Folder at Workspace.Zones.Stingray Shores
+[6] Stingray Shores (Fish Part/Mesh) - Part at Workspace.!!!! ISLAND LOCATIONS !!!!.Stingray Shores
+[7] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Inside.Stingray Shores
+[8] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Inside.Stingray Shores
+[9] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Inside.Stingray Shores
+[10] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Inside.Stingray Shores
+[11] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Outside.Stingray Shores
+[12] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Outside.Stingray Shores
+[13] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Special.Stingray Shores
+[14] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Outside.Stingray Shores
+[15] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Special.Stingray Shores
+[16] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Outside.Stingray Shores
+[17] Stingray Shores (Fish Object) - Folder at Workspace.Islands.Stingray Shores
+[18] StingraySand (Fish Object) - Folder at Workspace.Islands.Stingray Shores.StingraySand
+[19] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Special.Stingray Shores
+[20] Stingray Shores (Fish Object) - Folder at Workspace.BoatSpawnRegions.Stingray Shores
+[21] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Special.Stingray Shores
+[22] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Special.Stingray Shores
+[23] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Special.Stingray Shores
+[24] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Zones.Stingray Shores.Special.Stingray Shores
+[25] Stingray Shores (Fish Part/Mesh) - Part at Workspace.Locations.Stingray Shores
+
+--- GOLDEN (1 items) ---
+[1] Golden of Decay (Fish Object) - Accessory at Workspace.Characters.DontTrustAnyoneBruh1.Golden of Decay
+
+--- GENERAL FISH-RELATED (LANTERN) (20 items) ---
+[1] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Lantern-Bottom
+[2] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Winter Fest.Model.Lantern-Bottom
+[3] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Esoteric Island.Model.Lantern-Bottom
+[4] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Winter Fest.Model.Lantern-Bottom
+[5] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Esoteric Island.Model.Lantern-Bottom
+[6] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Esoteric Island.Model.Lantern-Bottom
+[7] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Esoteric Island.Model.Lantern-Bottom
+[8] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Esoteric Island.Model.Lantern-Bottom
+[9] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Lantern-Bottom
+[10] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Winter Fest.Model.Lantern-Bottom
+[11] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Winter Fest.Model.Lantern-Bottom
+[12] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Kohana.Model.Lantern-Bottom
+[13] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Kohana.Model.Lantern-Bottom
+[14] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Tropical Grove.Model.Lantern-Bottom
+[15] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Winter Fest.Model.Lantern-Bottom
+[16] Lantern-Bottom (Fish Model) - Model at Workspace.Map.Shack.Model.Lantern-Bottom
+[17] Lantern-Bottom (Fish Model) - Model at Workspace.Machines.Shop.Lantern-Bottom
+[18] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Coral Reefs.Model.Lantern-Bottom
+[19] Lantern-Bottom (Fish Model) - Model at Workspace.Map.Shack.Model.Lantern-Bottom
+[20] Lantern-Bottom (Fish Model) - Model at Workspace.Islands.Winter Fest.Model.Lantern-Bottom
+
+--- LOBSTER (3 items) ---
+[1] Blue Lobster (Fish Model) - Model at Workspace.Islands.Tropical Grove.Blue Lobster
+[2] Blue Lobster (Fish Model) - Model at Workspace.Islands.Kohana.Blue Lobster
+[3] Blue Lobster (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Blue Lobster
+
+--- CORAL (61 items) ---
+[1] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[2] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[3] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[4] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[5] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[6] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[7] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[8] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[9] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[10] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[11] Coral Reefs (Fish Part/Mesh) - Part at Workspace.!!!! ISLAND LOCATIONS !!!!.Coral Reefs
+[12] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[13] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[14] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[15] Coral Reefs (Fish Object) - Folder at Workspace.Zones.Coral Reefs
+[16] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[17] Coral (Fish Object) - Folder at Workspace.Islands.Winter Fest.Coral
+[18] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[19] Coral (Fish Object) - Folder at Workspace.Islands.Cystal Island.Coral
+[20] Coral Reefs (Fish Object) - Folder at Workspace.BoatSpawnRegions.Coral Reefs
+[21] Coral (Fish Model) - Model at Workspace.Islands.Lost Isle.Coral
+[22] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[23] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[24] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[25] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[26] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[27] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[28] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[29] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[30] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[31] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[32] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[33] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[34] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[35] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[36] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[37] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[38] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[39] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[40] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[41] Coral Reefs (Fish Object) - Folder at Workspace.Islands.Coral Reefs
+[42] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[43] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[44] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[45] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[46] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[47] Kohana Coral (Fish Object) - Folder at Workspace.Islands.Kohana.Kohana Coral
+[48] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[49] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[50] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[51] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[52] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[53] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[54] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[55] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[56] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[57] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[58] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[59] Corals (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.Corals
+[60] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+[61] CoralLight (Fish Part/Mesh) - MeshPart at Workspace.Islands.Stingray Shores.Stingray Coral.CoralLight
+
+--- CLOWNFISH (1 items) ---
+[1] Gingerbread-Clownfish (Fish Model) - Model at Workspace.Islands.Winter Fest.Model.Gingerbread-Clownfish
+
+--- GLOW (1 items) ---
+[1] Glow (Fish Part/Mesh) - MeshPart at Workspace.Machines.Shop.Lantern-Bottom.Glow
+
+--- GENERAL FISH-RELATED (BOAR) (6 items) ---
+[1] Board (Fish Model) - Model at Workspace.Map.Board
+[2] Board (Fish Part/Mesh) - Part at Workspace.! LEADERBOARDS !.Leaderboard - Monthly Caught Fish.Board
+[3] ! LEADERBOARDS ! (Fish Model) - Model at Workspace.! LEADERBOARDS !
+[4] Board (Fish Part/Mesh) - Part at Workspace.! LEADERBOARDS !.Leaderboard - Monthly Fishing Level.Board
+[5] Board (Fish Part/Mesh) - Part at Workspace.! LEADERBOARDS !.Leaderboard - Candy Cane.Board
+[6] Leaderboard - Candy Cane (Fish Model) - Model at Workspace.! LEADERBOARDS !.Leaderboard - Candy Cane
+
+--- ICE (9 items) ---
+[1] Floatation_Device (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Floatation_Device
+[2] Floatation_Device (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Floatation_Device
+[3] Floatation_Device (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Floatation_Device
+[4] Floatation_Device (Fish Model) - Model at Workspace.Islands.Tropical Grove.Floatation_Device
+[5] Floatation_Device (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Floatation_Device
+[6] Floatation_Device (Fish Model) - Model at Workspace.Map.Shack.Model.Floatation_Device
+[7] Floatation_Device (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Floatation_Device
+[8] Floatation_Device (Fish Model) - Model at Workspace.Map.Shack.Model.Floatation_Device
+[9] Floatation_Device (Fish Model) - Model at Workspace.Islands.Stingray Shores.Model.Floatation_Device
+
+--- ALL FISH NAMES (Simple List) ---
+- Board
+- ! LEADERBOARDS !
+- Leaderboard - Candy Cane
+- Meshes/fish-assets_Circle.003
+- Meshes/fish-assets_Cube.034
+- Silly Fisherman
+- Leaderboard - Monthly Caught Fish
+- AnglerFishHat
+- Lantern-Bottom
+- Gingerbread-Clownfish
+- CoralLight
+- Corals
+- Coral Reefs
+- Coral
+- Kohana Coral
+- CursedScroll
+- Water Wheel
+- Glow
+- Golden of Decay
+- Floatation_Device
+- Blue Lobster
+- Meshes/FI_Luck_Machine_Neon.001
+- Meshes/FI_Luck_Machine_Neon.003
+- Neon
+- Meshes/FI_Luck_Machine_Neon.002
+- UpperNeon
+- Stingray Coral
+- Stingray Shores
+- StingraySand
+- Tropical Grove
+
+=== COMPLETE BAIT DATA ===
+[1] Baits (ModuleScript) at ReplicatedStorage.Baits
+[2] NumberSpinner (ModuleScript) at ReplicatedStorage.Packages.NumberSpinner
+[3] BaitShopController (ModuleScript) at ReplicatedStorage.Controllers.BaitShopController
+[4] FireflyController (ModuleScript) at ReplicatedStorage.Controllers.FireflyController
+[5] Bait Dive (Part) at ReplicatedStorage.VFX.Bait Dive
+[6] Bait Dive (Part) at Workspace.CosmeticFolder.Bait Dive
+[7] Bait Dive (Part) at Workspace.CosmeticFolder.Bait Dive
+[8] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.GOYANGMAMAMUDAA.!!!FISHING_BAIT_MODEL!!!
+[9] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.AyadiPANTEK.!!!FISHING_BAIT_MODEL!!!
+[10] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.RitchiALT1.!!!FISHING_BAIT_MODEL!!!
+[11] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.bngoreal.!!!FISHING_BAIT_MODEL!!!
+[12] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.singmaboi6.!!!FISHING_BAIT_MODEL!!!
+[13] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.slamet_0211.!!!FISHING_BAIT_MODEL!!!
+[14] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.mouracor.!!!FISHING_BAIT_MODEL!!!
+[15] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.DontTrustAnyoneBruh1.!!!FISHING_BAIT_MODEL!!!
+[16] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.GGEZMAN90.!!!FISHING_BAIT_MODEL!!!
+[17] Tele_Spinnerxxx (Model) at Workspace.Characters.Tele_Spinnerxxx
+[18] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.Tele_Spinnerxxx.!!!FISHING_BAIT_MODEL!!!
+[19] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.mia27ll888.!!!FISHING_BAIT_MODEL!!!
+[20] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.suaraazanpp.!!!FISHING_BAIT_MODEL!!!
+[21] !!!FISHING_BAIT_MODEL!!! (Part) at Workspace.Characters.ScyDrie.!!!FISHING_BAIT_MODEL!!!
+
+=== COMPLETE FISHING ROD DATA ===
+[1] GiftProducts (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.GiftProducts
+[2] StringLibrary (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.StringLibrary
+[3] FishingRodModifiers (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.FishingRodModifiers
+[4] RaycastUtility (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.RaycastUtility
+[5] Products (Unknown) - Folder at ReplicatedStorage.Shared.Products
+[6] CoinProducts (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.Products.CoinProducts
+[7] ItemProducts (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.Products.ItemProducts
+[8] DoubleLuckProducts (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.Products.DoubleLuckProducts
+[9] CandyCaneProducts (Rod Data/Script) - ModuleScript at ReplicatedStorage.Shared.Products.CandyCaneProducts
+[10] FastCastRedux (Rod Data/Script) - ModuleScript at ReplicatedStorage.Packages.FastCastRedux
+[11] etithespirit_fastcastredux@13.2.1 (Unknown) - Folder at ReplicatedStorage.Packages._Index.etithespirit_fastcastredux@13.2.1
+[12] fastcastredux (Rod Data/Script) - ModuleScript at ReplicatedStorage.Packages._Index.etithespirit_fastcastredux@13.2.1.fastcastredux
+[13] FishingController (Rod Data/Script) - ModuleScript at ReplicatedStorage.Controllers.FishingController
+[14] RodShopController (Rod Data/Script) - ModuleScript at ReplicatedStorage.Controllers.RodShopController
+[17] Ghoul Rod Dive (Rod Part/Mesh) - Part at ReplicatedStorage.VFX.Ghoul Rod Dive
+[18] DevProductPurchase (Rod Data/Script) - ModuleScript at ReplicatedStorage.Observers.DevProductPurchase
+[19] DevProductPrice (Rod Data/Script) - ModuleScript at ReplicatedStorage.Observers.DevProductPrice
+[20] ItemStringUtility (Rod Data/Script) - ModuleScript at ReplicatedStorage.Modules.ItemStringUtility
+[21] CoinProductsUtility (Rod Data/Script) - ModuleScript at ReplicatedStorage.Modules.CoinProductsUtility
+[22] AnglerFishHat (Unknown) - Accessory at ReplicatedStorage.NPC.Lava Fisherman.AnglerFishHat
+[23] Lava Rod (Rod Model) - Model at ReplicatedStorage.NPC.Lava Fisherman.Lava Rod
+[24] AnglerFishHat (Unknown) - Accessory at ReplicatedStorage.NPC.Silly Fisherman.AnglerFishHat
+[25] Starter Rod (Rod Model) - Model at ReplicatedStorage.NPC.Silly Fisherman.Starter Rod
+[26] AnglerFishHat (Unknown) - Accessory at ReplicatedStorage.NPC.Lonely Fisherman.AnglerFishHat
+[27] Ghoul Rod (Rod Data/Script) - ModuleScript at ReplicatedStorage.Passives.Ghoul Rod
+[28] DefaultRod_New (Rod Model) - Model at Workspace.Islands.Coral Reefs.DefaultRod_New
+[29] DefaultRod_New (Rod Model) - Model at Workspace.Islands.Coral Reefs.DefaultRod_New
+[30] DefaultRod_New (Rod Model) - Model at Workspace.Islands.Coral Reefs.DefaultRod_New
+[31] DefaultRod_New (Rod Model) - Model at Workspace.Islands.Kohana.DefaultRod_New
+[32] DefaultRod_New (Rod Model) - Model at Workspace.Islands.Kohana.DefaultRod_New
+[33] DefaultRod_New (Rod Model) - Model at Workspace.Islands.Kohana.DefaultRod_New
+[34] RodDisplay (Rod Model) - Model at Workspace.Islands.Tropical Grove.RodDisplay
+[35] Fishing Rod Ruins (Rod Model) - Model at Workspace.Islands.Lost Isle.Fishing Rod Ruins
+[36] Gears (Rod Model) - Model at Workspace.Machines.Weather Machine.Gears
+[37] AnglerFishHat (Unknown) - Accessory at Workspace.NPC.Silly Fisherman.AnglerFishHat
+[38] Starter Rod (Rod Model) - Model at Workspace.NPC.Silly Fisherman.Starter Rod
+[39] Leaderboard - Monthly Fishing Level (Rod Model) - Model at Workspace.! LEADERBOARDS !.Leaderboard - Monthly Fishing Level
+[40] Fishing Radar Stand (Rod Model) - Model at Workspace.!!! MENU RINGS.Fishing Radar Stand
+[41] Ares Rod Stand (Rod Model) - Model at Workspace.!!! MENU RINGS.Ares Rod Stand
+[42] Angler Rod Stand (Rod Model) - Model at Workspace.!!! MENU RINGS.Angler Rod Stand
+[43] Angler Rod (Rod Model) - Model at Workspace.!!! MENU RINGS.Angler Rod Stand.Angler Rod
+[44] Diving Gear Display (Rod Model) - Model at Workspace.!!! MENU RINGS.Diving Gear Display
+[45] Diving Gear Display (Rod Model) - Model at Workspace.!!! MENU RINGS.Diving Gear Display
+[46] Rods (Rod Part/Mesh) - Part at Workspace.!!! MENU RINGS.Rods
+[47] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.GOYANGMAMAMUDAA.!!!FISHING_LANTERN!!!
+[48] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.GOYANGMAMAMUDAA.!!!FISHING_BAIT_MODEL!!!
+[49] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.AyadiPANTEK.!!!FISHING_LANTERN!!!
+[50] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.AyadiPANTEK.!!!FISHING_BAIT_MODEL!!!
+[51] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.RitchiALT1.!!!FISHING_LANTERN!!!
+[52] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.RitchiALT1.!!!FISHING_BAIT_MODEL!!!
+[53] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.bngoreal.!!!FISHING_BAIT_MODEL!!!
+[54] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.bngoreal.!!!FISHING_LANTERN!!!
+[55] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.singmaboi6.!!!FISHING_BAIT_MODEL!!!
+[56] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.singmaboi6.!!!FISHING_LANTERN!!!
+[57] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.slamet_0211.!!!FISHING_BAIT_MODEL!!!
+[58] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.slamet_0211.!!!FISHING_LANTERN!!!
+[59] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.mouracor.!!!FISHING_BAIT_MODEL!!!
+[60] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.mouracor.!!!FISHING_LANTERN!!!
+[61] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.DontTrustAnyoneBruh1.!!!FISHING_LANTERN!!!
+[62] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.DontTrustAnyoneBruh1.!!!FISHING_BAIT_MODEL!!!
+[63] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.GGEZMAN90.!!!FISHING_LANTERN!!!
+[64] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.GGEZMAN90.!!!FISHING_BAIT_MODEL!!!
+[65] !!!FISHING_VIEW_MODEL!!! (Rod Model) - Model at Workspace.Characters.Tele_Spinnerxxx.!!!FISHING_VIEW_MODEL!!!
+[66] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.Tele_Spinnerxxx.!!!FISHING_BAIT_MODEL!!!
+[67] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.Tele_Spinnerxxx.!!!FISHING_LANTERN!!!
+[68] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.mia27ll888.!!!FISHING_LANTERN!!!
+[69] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.mia27ll888.!!!FISHING_BAIT_MODEL!!!
+[70] !!!FISHING_VIEW_MODEL!!! (Rod Model) - Model at Workspace.Characters.mia27ll888.!!!FISHING_VIEW_MODEL!!!
+[71] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.suaraazanpp.!!!FISHING_LANTERN!!!
+[72] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.suaraazanpp.!!!FISHING_BAIT_MODEL!!!
+[73] !!!FISHING_VIEW_MODEL!!! (Rod Model) - Model at Workspace.Characters.suaraazanpp.!!!FISHING_VIEW_MODEL!!!
+[74] !!!FISHING_LANTERN!!! (Rod Part/Mesh) - MeshPart at Workspace.Characters.ScyDrie.!!!FISHING_LANTERN!!!
+[75] !!!FISHING_BAIT_MODEL!!! (Rod Part/Mesh) - Part at Workspace.Characters.ScyDrie.!!!FISHING_BAIT_MODEL!!!
+
+=== COMPLETE BOAT DATA ===
+[1] Hyper Boat Pack (Model) at Workspace.Islands.Stingray Shores.Hyper Boat Pack
+[2] BoatSpawnRegions (Folder) at Workspace.BoatSpawnRegions
+[3] Boat Expert (Model) at Workspace.NPC.Boat Expert
+[4] BoatTrail (Part) at Workspace.Vehicles.Jetski.BoatTrail
+[5] BoatTrail (Part) at Workspace.Vehicles.Jetski.BoatTrail
+[6] BoatTrail (Part) at Workspace.Vehicles.Jetski.BoatTrail
+[7] BoatTrail (Part) at Workspace.Vehicles.Jetski.BoatTrail
+[8] BoatTrail (Part) at Workspace.Vehicles.Jetski.BoatTrail
+[9] Small Boat (Model) at Workspace.Vehicles.Small Boat
+[10] BoatTrail (Part) at Workspace.Vehicles.Small Boat.BoatTrail
+[11] BoatTrail (Part) at Workspace.Vehicles.Jetski.BoatTrail
+
+=== COMPLETE NPC DATA ===
+[1] !!! NPC SPAWN PARTS (Model) at Workspace.!!! NPC SPAWN PARTS
+
+=== ANALYSIS NOTES ===
+Key Findings:
+- Main networking uses sleitnick_net framework
+- Fishing system has dedicated remotes for casting, catching, reeling
+- Economy system handles purchases and sales
+- Boat system supports spawning/despawning
+- Trading system available
+- Enhancement/enchantment system present
+
+Recommended AutoFish Integration Points:
+1. Use fishing-category remotes for automation
+2. Monitor FishCaught and FishingCompleted events
+3. Use ChargeFishingRod and CancelFishingInputs functions
+4. Integrate with SellItem/SellAllItems for auto-selling
+5. Monitor BaitSpawned and EquipBait for bait management
+
+File Generated: FishIt_Complete_Explorer_20250816_180513.txt
+Generated by: Fish It Enhanced Game Explorer
+Purpose: Complete game analysis for AutoFish development
