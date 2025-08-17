@@ -88,10 +88,13 @@ spawn(function()
 
             -- 3. Request Fishing Minigame Started (pakai dua angka persis old.lua)
             if requestFishing then
+                -- Gunakan angka random agar tidak selalu perfect cast
+                local x = math.random(-1200, -1000) / 1000
+                local y = math.random(950, 1000) / 1000
                 local ok, err = pcall(function()
-                    requestFishing:InvokeServer(-1.2379989624023438, 0.9800224985802423)
+                    requestFishing:InvokeServer(x, y)
                 end)
-                print("[AutoFishing] RequestFishingMinigameStarted:InvokeServer(-1.2379989624023438, 0.9800224985802423) error:", err)
+                print(string.format("[AutoFishing] RequestFishingMinigameStarted:InvokeServer(%f, %f) error: %s", x, y, tostring(err)))
             else
                 print("[AutoFishing] RF/RequestFishingMinigameStarted not found!")
             end
