@@ -12,31 +12,44 @@ local logHistory = {}
 local isLoggingEnabled = false -- Logger dinonaktifkan saat start untuk performa
 local rawmt = getrawmetatable(game)
 local oldNamecall = rawmt.__namecall
+local isHookBusy = false
 local namecallHook = function(self, ...)
-    local method = getnamecallmethod()
-    local args = {...}
-    local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
-    
-    if isRemote then
-        local result, errorMsg, retVal
-        local ok, ret = pcall(function()
-            retVal = oldNamecall(self, unpack(args))
-        end)
-        
-        if not ok then
-            result, errorMsg = false, tostring(ret)
-        else
-            result, errorMsg = true, "nil"
+    if isHookBusy then return oldNamecall(self, ...) end
+
+    isHookBusy = true
+    local success, result = pcall(function() 
+        local method = getnamecallmethod()
+        local args = {...}
+        local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
+
+        if isRemote then
+            local logResult, errorMsg, retVal
+            local ok, ret = pcall(function()
+                retVal = oldNamecall(self, unpack(args))
+            end)
+
+            if not ok then
+                logResult, errorMsg = false, tostring(ret)
+            else
+                logResult, errorMsg = true, "nil"
+            end
+
+            local logMsg = string.format("[%s] [%s] %s | Args: %s | Result: %s | Error: %s",
+                os.date("%H:%M:%S"), method, tostring(self), table.concat(args, ", "), tostring(logResult), errorMsg)
+
+            print(logMsg)
+            table.insert(logHistory, logMsg)
+            return retVal
         end
-        
-        local logMsg = string.format("[%s] [%s] %s | Args: %s | Result: %s | Error: %s", 
-            os.date("%H:%M:%S"), method, tostring(self), table.concat(args, ", "), tostring(result), errorMsg)
-        
-        print(logMsg)
-        table.insert(logHistory, logMsg)
-        return retVal
+        return oldNamecall(self, ...)
+    end)
+    isHookBusy = false
+
+    if not success then
+        warn("Universal Logger Error:", result)
     end
-    return oldNamecall(self, ...)
+
+    return result
 end
 
 local function enableLogger()
