@@ -575,7 +575,7 @@ historyTitle.Parent = historySection
 
 -- Scrolling frame for history
 local historyFrame = Instance.new("ScrollingFrame")
-historyFrame.Size = UDim2.new(1, -20, 0, 60)
+historyFrame.Size = UDim2.new(1, -120, 0, 60)
 historyFrame.Position = UDim2.new(0, 10, 0, 30)
 historyFrame.BackgroundColor3 = Color3.fromRGB(10, 15, 25)
 historyFrame.BorderSizePixel = 0
@@ -596,6 +596,36 @@ historyText.TextXAlignment = Enum.TextXAlignment.Left
 historyText.TextYAlignment = Enum.TextYAlignment.Top
 historyText.TextWrapped = true
 historyText.Parent = historyFrame
+
+-- Save Result Button
+local saveBtn = Instance.new("TextButton")
+saveBtn.Size = UDim2.new(0, 100, 0, 30)
+saveBtn.Position = UDim2.new(1, -110, 0, 60)
+saveBtn.Text = "💾 Save Result"
+saveBtn.Font = Enum.Font.GothamBold
+saveBtn.TextSize = 12
+saveBtn.BackgroundColor3 = Color3.fromRGB(70, 170, 90)
+saveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+saveBtn.Parent = historySection
+Instance.new("UICorner", saveBtn)
+
+saveBtn.MouseButton1Click:Connect(function()
+    local lines = {}
+    for _, entry in ipairs(ModuleAnalyzer.history) do
+        local status = entry.success and "✅" or "❌"
+        local line = string.format("[%s] %s %s.%s → %s", entry.time, status, entry.module, entry.method, tostring(entry.result))
+        table.insert(lines, line)
+    end
+    local resultText = #lines > 0 and table.concat(lines, "\n") or "No executions yet..."
+    local success, err = pcall(function()
+        writefile("ModuleAnalyzer_Result.txt", resultText)
+    end)
+    if success then
+        Notify("Save Result", "💾 Result saved to ModuleAnalyzer_Result.txt!")
+    else
+        Notify("Save Result", "❌ Failed to save result! " .. tostring(err))
+    end
+end)
 
 -- Update methods display
 local function updateMethods(moduleName)

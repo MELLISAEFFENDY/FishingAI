@@ -509,7 +509,7 @@ resultsTitle.Parent = resultsSection
 
 -- Scrolling frame for history
 local historyFrame = Instance.new("ScrollingFrame")
-historyFrame.Size = UDim2.new(1, -20, 0, 140)
+historyFrame.Size = UDim2.new(1, -120, 0, 140)
 historyFrame.Position = UDim2.new(0, 10, 0, 30)
 historyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 historyFrame.BorderSizePixel = 0
@@ -530,6 +530,36 @@ historyText.TextXAlignment = Enum.TextXAlignment.Left
 historyText.TextYAlignment = Enum.TextYAlignment.Top
 historyText.TextWrapped = true
 historyText.Parent = historyFrame
+
+-- Save Result Button
+local saveBtn = Instance.new("TextButton")
+saveBtn.Size = UDim2.new(0, 100, 0, 30)
+saveBtn.Position = UDim2.new(1, -110, 0, 140)
+saveBtn.Text = "💾 Save Result"
+saveBtn.Font = Enum.Font.GothamBold
+saveBtn.TextSize = 12
+saveBtn.BackgroundColor3 = Color3.fromRGB(70, 170, 90)
+saveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+saveBtn.Parent = resultsSection
+Instance.new("UICorner", saveBtn)
+
+saveBtn.MouseButton1Click:Connect(function()
+    local lines = {}
+    for _, entry in ipairs(RemoteTester.history) do
+        local status = entry.success and "✅" or "❌"
+        local line = string.format("[%s] %s %s → %s", entry.time, status, entry.remote, tostring(entry.result))
+        table.insert(lines, line)
+    end
+    local resultText = #lines > 0 and table.concat(lines, "\n") or "No executions yet..."
+    local success, err = pcall(function()
+        writefile("RemoteTester_Result.txt", resultText)
+    end)
+    if success then
+        Notify("Save Result", "💾 Result saved to RemoteTester_Result.txt!")
+    else
+        Notify("Save Result", "❌ Failed to save result! " .. tostring(err))
+    end
+end)
 
 -- Update history display
 local function updateHistory()
