@@ -12,8 +12,10 @@ local function logActivity(remoteType, remoteName, args, result, errorMsg)
 end
 
 -- Hook global __namecall untuk logging semua aktivitas remote
-local oldNamecall = nil
-oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+local rawmt = getrawmetatable(game)
+local oldNamecall = rawmt.__namecall
+setreadonly(rawmt, false)
+rawmt.__namecall = function(self, ...)
     local method = getnamecallmethod()
     local args = {...}
     local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
@@ -27,8 +29,8 @@ oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
         return retVal
     end
     return oldNamecall(self, ...)
-end)
 end
+setreadonly(rawmt, true)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 -- Tidak perlu scan/wrap remote lagi, semua sudah di-hook global
