@@ -50,7 +50,7 @@ local function safeGetServerTime()
     return serverTime or 1
 end
 
-autoFishLoop()
+
 
 -- Loop auto fishing hanya berjalan jika ON
 spawn(function()
