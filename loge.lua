@@ -171,18 +171,22 @@ end)
 
 exportBtn.MouseButton1Click:Connect(function()
     if #logHistory == 0 then
-        print("Log is empty. Nothing to export.")
+        print("Log kosong. Tidak ada yang diekspor.")
         return
     end
-    
-    -- Fungsi writefile() adalah non-standar, tapi umum di banyak executor.
-    -- Jika ini tidak berhasil, coba periksa dokumentasi executor Anda.
-    if writefile then
+    -- Fungsi writefile() adalah non-standar, hanya tersedia di beberapa executor.
+    if type(writefile) == "function" then
         local logContent = table.concat(logHistory, "\n")
-        writefile(LOG_FILE_NAME, logContent)
-        print("✅ Log successfully exported to " .. LOG_FILE_NAME)
+        local sukses, err = pcall(function()
+            writefile(LOG_FILE_NAME, logContent)
+        end)
+        if sukses then
+            print("✅ Log berhasil diekspor ke " .. LOG_FILE_NAME)
+        else
+            print("❌ Gagal menulis file log: " .. tostring(err))
+        end
     else
-        print("❌ Error: `writefile` function not available in this environment.")
+        print("❌ Error: Fungsi `writefile` tidak tersedia di environment Anda. Silakan cek dokumentasi executor.")
     end
 end)
 
