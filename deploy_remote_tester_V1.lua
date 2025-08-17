@@ -1,7 +1,7 @@
 -- Deploy Remote Tester with Floating UI
 -- GitHub Raw URL: https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_remote_tester.lua
 -- Usage: loadstring(game:HttpGet("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_remote_tester.lua"))()
--- Version 2: Made UI Scrollable and Added Console Log Saving
+-- Version 2.1: Fixed UIGridLayout error
 
 -- ===================================================================
 -- >> KODE BARU: Untuk Merekam Console <<
@@ -344,7 +344,7 @@ quickLayout.CellPadding = UDim2.new(0, 5, 0, 5)
 quickLayout.CellSize = UDim2.new(0, 140, 0, 30)
 quickLayout.StartCorner = Enum.StartCorner.TopLeft
 quickLayout.SortOrder = Enum.SortOrder.LayoutOrder
-quickLayout.Position = UDim2.new(0, 10, 0, 35)
+-- >> PERBAIKAN: Baris yang menyebabkan error dihapus <<
 
 local function createQuickButton(text, parent)
     local btn = Instance.new("TextButton", parent)
