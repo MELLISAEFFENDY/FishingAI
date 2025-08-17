@@ -59,8 +59,8 @@ spawn(function()
         return
     end
     local equipRod = net["RE/EquipToolFromHotbar"]
-    local requestFishing = net["RF/RequestFishingMinigameStarted"]
     local chargeRod = net["RF/ChargeFishingRod"]
+    local requestFishing = net["RF/RequestFishingMinigameStarted"]
     local fishingCompleted = net["RE/FishingCompleted"]
     while true do
         if autoFishingEnabled then
@@ -71,22 +71,9 @@ spawn(function()
             else
                 print("[AutoFishing] RE/EquipToolFromHotbar not found!")
             end
-            wait(1)
+            wait(math.random(10,30)/100) -- delay acak 0.1-0.3 detik
 
-            -- 2. Request Fishing Minigame Started
-            if requestFishing then
-                local serverTime = safeGetServerTime()
-                local result = nil
-                local ok, err = pcall(function()
-                    result = requestFishing:InvokeServer(serverTime)
-                end)
-                print("[AutoFishing] RequestFishingMinigameStarted:InvokeServer(" .. tostring(serverTime) .. "), result:", result, "error:", err)
-            else
-                print("[AutoFishing] RF/RequestFishingMinigameStarted not found!")
-            end
-            wait(1)
-
-            -- 3. Charge Fishing Rod
+            -- 2. Charge Fishing Rod
             if chargeRod then
                 local serverTime = safeGetServerTime()
                 print("[AutoFishing] ChargeFishingRod argumen:", serverTime)
@@ -97,7 +84,18 @@ spawn(function()
             else
                 print("[AutoFishing] RF/ChargeFishingRod not found!")
             end
-            wait(1)
+            wait(math.random(10,30)/100)
+
+            -- 3. Request Fishing Minigame Started (pakai dua angka persis old.lua)
+            if requestFishing then
+                local ok, err = pcall(function()
+                    requestFishing:InvokeServer(-1.2379989624023438, 0.9800224985802423)
+                end)
+                print("[AutoFishing] RequestFishingMinigameStarted:InvokeServer(-1.2379989624023438, 0.9800224985802423) error:", err)
+            else
+                print("[AutoFishing] RF/RequestFishingMinigameStarted not found!")
+            end
+            wait(0.4 + math.random(10,30)/100)
 
             -- 4. Fishing Completed
             if fishingCompleted then
@@ -108,7 +106,7 @@ spawn(function()
             else
                 print("[AutoFishing] RE/FishingCompleted not found!")
             end
-            wait(2)
+            wait(math.random(20,40)/100)
         else
             wait(0.2)
         end
