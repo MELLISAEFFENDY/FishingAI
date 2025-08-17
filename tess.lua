@@ -75,11 +75,12 @@ spawn(function()
 
             -- 2. Request Fishing Minigame Started
             if requestFishing then
+                local serverTime = safeGetServerTime()
                 local result = nil
                 local ok, err = pcall(function()
-                    result = requestFishing:InvokeServer()
+                    result = requestFishing:InvokeServer(serverTime)
                 end)
-                print("[AutoFishing] RequestFishingMinigameStarted:InvokeServer(), result:", result, "error:", err)
+                print("[AutoFishing] RequestFishingMinigameStarted:InvokeServer(" .. tostring(serverTime) .. "), result:", result, "error:", err)
             else
                 print("[AutoFishing] RF/RequestFishingMinigameStarted not found!")
             end
