@@ -11,45 +11,27 @@ local function logActivity(remoteType, remoteName, args, result, errorMsg)
     table.insert(logHistory, msg)
 end
 
-local function wrapRemote(remote, remoteType, remoteName)
-    if remoteType == "FireServer" and typeof(remote.FireServer) == "function" then
-        local oldFire = remote.FireServer
-        remote.FireServer = function(self, ...)
-            local args = {...}
-            local result, errorMsg = true, nil
-            local ok, err = pcall(function()
-                oldFire(self, unpack(args))
-            end)
-            if not ok then result, errorMsg = false, err end
-            logActivity("FireServer", remoteName, table.concat(args, ", "), result, errorMsg)
-        end
-    elseif remoteType == "InvokeServer" and typeof(remote.InvokeServer) == "function" then
-        local oldInvoke = remote.InvokeServer
-        remote.InvokeServer = function(self, ...)
-            local args = {...}
-            local result, errorMsg, retVal = true, nil, nil
-            local ok, ret = pcall(function()
-                retVal = oldInvoke(self, unpack(args))
-            end)
-            if not ok then result, errorMsg = false, ret end
-            logActivity("InvokeServer", remoteName, table.concat(args, ", "), result, errorMsg)
-            return retVal
-        end
+-- Hook global __namecall untuk logging semua aktivitas remote
+local oldNamecall = nil
+oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+    local method = getnamecallmethod()
+    local args = {...}
+    local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
+    if isRemote then
+        local result, errorMsg, retVal = true, nil, nil
+        local ok, ret = pcall(function()
+            retVal = oldNamecall(self, unpack(args))
+        end)
+        if not ok then result, errorMsg = false, ret end
+        logActivity(method, tostring(self), table.concat(args, ", "), result, errorMsg)
+        return retVal
     end
+    return oldNamecall(self, ...)
+end)
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local function scanRemotes()
-    for _, obj in ipairs(ReplicatedStorage:GetDescendants()) do
-        if obj:IsA("RemoteEvent") then
-            wrapRemote(obj, "FireServer", obj:GetFullName())
-        elseif obj:IsA("RemoteFunction") then
-            wrapRemote(obj, "InvokeServer", obj:GetFullName())
-        end
-    end
-end
-
-scanRemotes()
+-- Tidak perlu scan/wrap remote lagi, semua sudah di-hook global
 
 -- UI untuk menampilkan log
 local player = game.Players.LocalPlayer
