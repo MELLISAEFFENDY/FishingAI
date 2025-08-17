@@ -10,46 +10,67 @@ local LOG_FILE_NAME = "UniversalRemoteLog.txt" -- Nama file untuk log yang diexp
 --[[ SCRIPT CORE ]]--
 local logHistory = {}
 local isLoggingEnabled = false -- Logger dinonaktifkan saat start untuk performa
+
+if type(getrawmetatable) ~= "function" or type(setreadonly) ~= "function" then
+    warn("Universal Logger: Unsupported environment. `getrawmetatable` or `setreadonly` is not available.")
+    return
+end
+
 local rawmt = getrawmetatable(game)
+if not rawmt then
+    warn("Universal Logger: Could not get game metatable.")
+    return
+end
+
 local oldNamecall = rawmt.__namecall
+if type(oldNamecall) ~= "function" then
+    warn("Universal Logger: `__namecall` is not a function. Cannot hook.")
+    return
+end
+
 local isHookBusy = false
 local namecallHook = function(self, ...)
     if isHookBusy then return oldNamecall(self, ...) end
 
     isHookBusy = true
-    local success, result = pcall(function() 
+    local success, returns = pcall(function()
+        if type(getnamecallmethod) ~= "function" then
+            return {oldNamecall(self, ...)}
+        end
+        
         local method = getnamecallmethod()
         local args = {...}
         local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
 
         if isRemote then
-            local logResult, errorMsg, retVal
-            local ok, ret = pcall(function()
-                retVal = oldNamecall(self, unpack(args))
-            end)
-
+            local results = {pcall(oldNamecall, self, ...)}
+            local ok = table.remove(results, 1)
+            local errorMsg = "nil"
             if not ok then
-                logResult, errorMsg = false, tostring(ret)
-            else
-                logResult, errorMsg = true, "nil"
+                errorMsg = tostring(results[1])
             end
 
+            local argsStr = table.concat(args, ", ")
+            local selfStr = tostring(self)
+
             local logMsg = string.format("[%s] [%s] %s | Args: %s | Result: %s | Error: %s",
-                os.date("%H:%M:%S"), method, tostring(self), table.concat(args, ", "), tostring(logResult), errorMsg)
+                os.date("%H:%M:%S"), method, selfStr, argsStr, tostring(ok), errorMsg)
 
             print(logMsg)
             table.insert(logHistory, logMsg)
-            return retVal
+            
+            return results
         end
-        return oldNamecall(self, ...)
+        return {oldNamecall(self, ...)}
     end)
     isHookBusy = false
 
     if not success then
-        warn("Universal Logger Error:", result)
+        warn("Universal Logger Error in hook: ", returns)
+        return oldNamecall(self, ...)
     end
 
-    return result
+    return unpack(returns)
 end
 
 local function enableLogger()
