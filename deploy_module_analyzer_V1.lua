@@ -1,6 +1,29 @@
 -- Deploy Module Analyzer with Floating UI
 -- GitHub Raw URL: https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_module_analyzer.lua
 -- Usage: loadstring(game:HttpGet("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_module_analyzer.lua"))()
+-- Version 2: Added Console Log Saving Feature
+
+-- ===================================================================
+-- >> KODE BARU: Untuk Merekam Console <<
+-- ===================================================================
+local original_print = print
+local consoleLog = {}
+
+print = function(...)
+    -- Buat pesan dari semua argumen yang diberikan ke print()
+    local message_parts = {}
+    for i = 1, select('#', ...) do
+        table.insert(message_parts, tostring(select(i, ...)))
+    end
+    local message = table.concat(message_parts, "\t")
+    
+    -- Simpan pesan ke dalam log dengan timestamp
+    table.insert(consoleLog, string.format("[%s] %s", os.date("%H:%M:%S"), message))
+    
+    -- Tetap jalankan fungsi print aslinya agar muncul di console
+    return original_print(...)
+end
+-- ===================================================================
 
 print("📁 Loading ModuleScript Analyzer with Floating UI...")
 print("📡 GitHub Deployment System")
@@ -296,7 +319,7 @@ contentArea.Parent = mainPanel
 
 -- Scanner section
 local scannerSection = Instance.new("Frame")
-scannerSection.Size = UDim2.new(1, 0, 0, 80)
+scannerSection.Size = UDim2.new(1, 0, 0, 120) -- >> DIUBAH: Tinggi frame diperbesar
 scannerSection.Position = UDim2.new(0, 0, 0, 10)
 scannerSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 scannerSection.BorderSizePixel = 0
@@ -336,10 +359,23 @@ scanStatus.BackgroundTransparency = 1
 scanStatus.TextXAlignment = Enum.TextXAlignment.Left
 scanStatus.Parent = scannerSection
 
+-- >> KODE BARU: Tombol untuk Save Log <<
+local saveLogBtn = Instance.new("TextButton")
+saveLogBtn.Size = UDim2.new(0, 200, 0, 35)
+saveLogBtn.Position = UDim2.new(0, 10, 0, 75) -- Posisi di bawah tombol Scan
+saveLogBtn.Text = "💾 Save Log to File"
+saveLogBtn.Font = Enum.Font.GothamBold
+saveLogBtn.TextSize = 12
+saveLogBtn.BackgroundColor3 = Color3.fromRGB(50, 150, 200)
+saveLogBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+saveLogBtn.Parent = scannerSection
+Instance.new("UICorner", saveLogBtn)
+
+
 -- Module loader section
 local loaderSection = Instance.new("Frame")
 loaderSection.Size = UDim2.new(1, 0, 0, 100)
-loaderSection.Position = UDim2.new(0, 0, 0, 100)
+loaderSection.Position = UDim2.new(0, 0, 0, 140) -- >> DIUBAH: Posisi Y disesuaikan
 loaderSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 loaderSection.BorderSizePixel = 0
 loaderSection.Parent = contentArea
@@ -430,7 +466,7 @@ Instance.new("UICorner", baitsBtn)
 -- Method executor section
 local executorSection = Instance.new("Frame")
 executorSection.Size = UDim2.new(1, 0, 0, 120)
-executorSection.Position = UDim2.new(0, 0, 0, 210)
+executorSection.Position = UDim2.new(0, 0, 0, 250) -- >> DIUBAH: Posisi Y disesuaikan
 executorSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 executorSection.BorderSizePixel = 0
 executorSection.Parent = contentArea
@@ -512,7 +548,7 @@ Instance.new("UICorner", executeBtn)
 -- Methods display section
 local methodsSection = Instance.new("Frame")
 methodsSection.Size = UDim2.new(1, 0, 0, 150)
-methodsSection.Position = UDim2.new(0, 0, 0, 340)
+methodsSection.Position = UDim2.new(0, 0, 0, 380) -- >> DIUBAH: Posisi Y disesuaikan
 methodsSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 methodsSection.BorderSizePixel = 0
 methodsSection.Parent = contentArea
@@ -556,7 +592,7 @@ methodsText.Parent = methodsFrame
 -- History section
 local historySection = Instance.new("Frame")
 historySection.Size = UDim2.new(1, 0, 0, 100)
-historySection.Position = UDim2.new(0, 0, 0, 500)
+historySection.Position = UDim2.new(0, 0, 0, 540) -- >> DIUBAH: Posisi Y disesuaikan
 historySection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 historySection.BorderSizePixel = 0
 historySection.Parent = contentArea
@@ -584,7 +620,6 @@ historyFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
 historyFrame.Parent = historySection
 Instance.new("UICorner", historyFrame)
 
--- Tambahkan UIListLayout agar history bisa scroll per item
 local historyLayout = Instance.new("UIListLayout")
 historyLayout.Parent = historyFrame
 historyLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -639,7 +674,6 @@ local function updateMethods(moduleName)
         methodsText.Text = table.concat(methodLines, "\n")
     end
     
-    -- Update canvas size
     local textBounds = game:GetService("TextService"):GetTextSize(
         methodsText.Text,
         methodsText.TextSize,
@@ -651,7 +685,6 @@ end
 
 -- Update history display
 local function updateHistory()
-    -- Bersihkan semua child kecuali layout dan UICorner
     for _, child in ipairs(historyFrame:GetChildren()) do
         if not child:IsA("UIListLayout") and not child:IsA("UICorner") then
             child:Destroy()
@@ -661,14 +694,12 @@ local function updateHistory()
     if #ModuleAnalyzer.history == 0 then
         local emptyLabel = Instance.new("TextLabel")
         emptyLabel.Size = UDim2.new(1, -10, 0, 18)
-        emptyLabel.Position = UDim2.new(0, 5, 0, 0)
         emptyLabel.Text = "No executions yet..."
         emptyLabel.Font = Enum.Font.Gotham
         emptyLabel.TextSize = 9
         emptyLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
         emptyLabel.BackgroundTransparency = 1
         emptyLabel.TextXAlignment = Enum.TextXAlignment.Left
-        emptyLabel.TextYAlignment = Enum.TextYAlignment.Top
         emptyLabel.Parent = historyFrame
     else
         for i = math.max(1, #ModuleAnalyzer.history - 10), #ModuleAnalyzer.history do
@@ -678,19 +709,16 @@ local function updateHistory()
                 local line = string.format("[%s] %s %s.%s → %s", entry.time, status, entry.module, entry.method, tostring(entry.result))
                 local label = Instance.new("TextLabel")
                 label.Size = UDim2.new(1, -10, 0, 18)
-                label.Position = UDim2.new(0, 5, 0, 0)
                 label.Text = line
                 label.Font = Enum.Font.Gotham
                 label.TextSize = 9
                 label.TextColor3 = Color3.fromRGB(200, 200, 200)
                 label.BackgroundTransparency = 1
                 label.TextXAlignment = Enum.TextXAlignment.Left
-                label.TextYAlignment = Enum.TextYAlignment.Top
                 label.Parent = historyFrame
             end
         end
     end
-    -- Update canvas size otomatis
     historyFrame.CanvasSize = UDim2.new(0, 0, 0, historyLayout.AbsoluteContentSize.Y + 10)
 end
 
@@ -709,6 +737,30 @@ scanBtn.MouseButton1Click:Connect(function()
         scanStatus.Text = "Found " .. #modules .. " modules"
     end)
 end)
+
+-- ===================================================================
+-- >> KODE BARU: Fungsi untuk tombol Save Log <<
+-- ===================================================================
+saveLogBtn.MouseButton1Click:Connect(function()
+    if #consoleLog == 0 then
+        Notify("Save Log", "⚠️ Log console masih kosong!", 4)
+        return
+    end
+
+    local logContent = table.concat(consoleLog, "\n")
+    local fileName = "ModuleAnalyzer_ConsoleLog.txt"
+
+    local success, err = pcall(function()
+        writefile(fileName, logContent)
+    end)
+
+    if success then
+        Notify("Save Log", "💾 Log berhasil disimpan ke " .. fileName, 5)
+    else
+        Notify("Save Log", "❌ Gagal menyimpan log! " .. tostring(err), 5)
+    end
+end)
+-- ===================================================================
 
 loadBtn.MouseButton1Click:Connect(function()
     local moduleName = moduleInput.Text
@@ -828,12 +880,11 @@ UserInputService.InputChanged:Connect(function(input)
     if input == floatingDragInput and floatingDragging then
         local delta = input.Position - floatingMousePos
         floatingBtn.Position = UDim2.new(floatingFramePos.X.Scale, floatingFramePos.X.Offset + delta.X, floatingFramePos.Y.Scale, floatingFramePos.Y.Offset + delta.Y)
-        -- Update shadow position
         floatingShadow.Position = UDim2.new(floatingBtn.Position.X.Scale, floatingBtn.Position.X.Offset - 2, floatingBtn.Position.Y.Scale, floatingBtn.Position.Y.Offset + 2)
     end
 end)
 
--- Make draggable
+-- Make main panel draggable
 local dragging = false
 local dragInput, mousePos, framePos
 
