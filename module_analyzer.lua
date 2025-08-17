@@ -207,6 +207,33 @@ screenGui.Name = "ModuleAnalyzerUI"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = game.CoreGui
 
+-- Save Result Button
+local saveBtn = Instance.new("TextButton")
+saveBtn.Size = UDim2.new(0, 120, 0, 35)
+saveBtn.Position = UDim2.new(0, 540, 0, 35)
+saveBtn.Text = "💾 Save Result"
+saveBtn.Font = Enum.Font.GothamBold
+saveBtn.TextSize = 11
+saveBtn.BackgroundColor3 = Color3.fromRGB(70, 130, 200)
+saveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+saveBtn.Parent = executorSection
+Instance.new("UICorner", saveBtn)
+
+saveBtn.MouseButton1Click:Connect(function()
+    local lines = {}
+    for _, entry in ipairs(ModuleAnalyzer.history) do
+        local status = entry.success and "SUCCESS" or "FAIL"
+        local line = string.format("[%s] [%s] %s.%s(%s) => %s", entry.time, status, entry.module, entry.method, tostring(entry.args), tostring(entry.result))
+        table.insert(lines, line)
+    end
+    local resultText = table.concat(lines, "\n")
+    if resultText == "" then resultText = "No results yet." end
+    pcall(function()
+        writefile("ModuleAnalyzer_Result.txt", resultText)
+    end)
+    Notify("Save Result", "💾 Result saved to ModuleAnalyzer_Result.txt!")
+end)
+
 -- Floating toggle button
 local floatingBtn = Instance.new("TextButton")
 floatingBtn.Size = UDim2.new(0, 60, 0, 60)

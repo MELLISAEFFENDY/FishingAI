@@ -77,9 +77,10 @@ echo  [4] 🔍 Fish It Remote Reference
 echo  [5] 🧪 Test Mode (Pre-loaded remotes)
 echo  [6] 📱 UI Control Guide
 echo  [7] ❌ Exit
+echo  [8] 💾 Save Execution History to File
 echo.
 
-set /p choice="Select option (1-7): "
+set /p choice="Select option (1-8): "
 
 if "%choice%"=="1" goto launch_tester
 if "%choice%"=="2" goto tester_guide
@@ -88,8 +89,9 @@ if "%choice%"=="4" goto remote_reference
 if "%choice%"=="5" goto test_mode
 if "%choice%"=="6" goto ui_guide
 if "%choice%"=="7" goto exit
+if "%choice%"=="8" goto save_result
 
-echo Invalid choice! Please select 1-7.
+echo Invalid choice! Please select 1-8.
 goto menu
 
 :launch_tester
@@ -490,6 +492,26 @@ echo  🔧 Floating Button:
 echo    • Button remains active until game closed
 echo    • UI can be toggled anytime
 echo    • Position saved for session
+echo.
+pause
+goto menu
+
+
+:save_result
+echo.
+echo  ==========================================
+echo   💾 Save Execution History to File
+echo  ==========================================
+echo.
+REM Check if temp_tester_launch.lua exists (as log source)
+if exist "temp_tester_launch.lua" (
+    copy /Y "temp_tester_launch.lua" "RemoteTester_Result.txt" >nul
+    echo  [✓] Execution history saved to RemoteTester_Result.txt
+    echo  [INFO] You can now transfer or open the file on PC/mobile.
+) else (
+    echo  [X] No execution history found!
+    echo  [ERROR] Run Remote Tester first to generate history.
+)
 echo.
 pause
 goto menu
