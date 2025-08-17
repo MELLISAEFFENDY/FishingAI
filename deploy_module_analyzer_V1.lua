@@ -1,7 +1,7 @@
 -- Deploy Module Analyzer with Floating UI
 -- GitHub Raw URL: https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_module_analyzer.lua
 -- Usage: loadstring(game:HttpGet("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_module_analyzer.lua"))()
--- Version 2: Added Console Log Saving Feature
+-- Version 3: Made UI Scrollable and fixed layout issues
 
 -- ===================================================================
 -- >> KODE BARU: Untuk Merekam Console <<
@@ -83,7 +83,6 @@ local function scanModuleScripts()
                 print("📁 Found ModuleScript: " .. fullPath)
                 
             elseif item:IsA("Folder") then
-                -- Recursively scan folders
                 pcall(function()
                     scanContainer(item, fullPath)
                 end)
@@ -91,7 +90,6 @@ local function scanModuleScripts()
         end
     end
     
-    -- Scan ReplicatedStorage
     scanContainer(ReplicatedStorage, "ReplicatedStorage")
     
     print("📊 ModuleScript scan complete:")
@@ -106,7 +104,6 @@ local function loadModule(moduleName)
     local targetModule = nil
     local modulePath = ""
     
-    -- Find the module
     for _, m in pairs(ModuleAnalyzer.foundModules) do
         if m.name == moduleName or m.path:find(moduleName) then
             targetModule = m.object
@@ -132,7 +129,6 @@ local function loadModule(moduleName)
         print("✅ Module loaded successfully!")
         Notify("Success", "✅ " .. moduleName .. " loaded!")
         
-        -- Analyze methods
         ModuleAnalyzer.methods[moduleName] = {}
         for key, value in pairs(result) do
             table.insert(ModuleAnalyzer.methods[moduleName], {
@@ -175,11 +171,9 @@ local function callModuleMethod(moduleName, methodName, args)
     local success, result = pcall(function()
         if type(method) == "function" then
             if args and args ~= "" then
-                -- Parse arguments
                 local parsedArgs = {}
                 for arg in string.gmatch(args, "[^,]+") do
                     arg = arg:gsub("^%s*(.-)%s*$", "%1")
-                    
                     local num = tonumber(arg)
                     if num then
                         table.insert(parsedArgs, num)
@@ -191,17 +185,15 @@ local function callModuleMethod(moduleName, methodName, args)
                         table.insert(parsedArgs, arg)
                     end
                 end
-                
                 return method(unpack(parsedArgs))
             else
                 return method()
             end
         else
-            return method -- Return property value
+            return method
         end
     end)
     
-    -- Log to history
     table.insert(ModuleAnalyzer.history, {
         time = os.date("%H:%M:%S"),
         module = moduleName,
@@ -242,10 +234,7 @@ floatingBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 floatingBtn.BorderSizePixel = 0
 floatingBtn.ZIndex = 1000
 floatingBtn.Parent = screenGui
-
-local floatingCorner = Instance.new("UICorner")
-floatingCorner.CornerRadius = UDim.new(0, 30)
-floatingCorner.Parent = floatingBtn
+Instance.new("UICorner", floatingBtn).CornerRadius = UDim.new(0, 30)
 
 -- Floating button shadow
 local floatingShadow = Instance.new("Frame")
@@ -256,35 +245,25 @@ floatingShadow.BackgroundTransparency = 0.7
 floatingShadow.BorderSizePixel = 0
 floatingShadow.ZIndex = 999
 floatingShadow.Parent = screenGui
-
-local shadowCorner = Instance.new("UICorner")
-shadowCorner.CornerRadius = UDim.new(0, 32)
-shadowCorner.Parent = floatingShadow
+Instance.new("UICorner", floatingShadow).CornerRadius = UDim.new(0, 32)
 
 -- Main panel
 local mainPanel = Instance.new("Frame")
-mainPanel.Size = UDim2.new(0, 550, 0, 650)
-mainPanel.Position = UDim2.new(0.5, -275, 0.5, -325)
+mainPanel.Size = UDim2.new(0, 550, 0, 600) -- >> DIUBAH: Tinggi panel dikurangi
+mainPanel.Position = UDim2.new(0.5, -275, 0.5, -300) -- >> DIUBAH: Posisi disesuaikan
 mainPanel.BackgroundColor3 = Color3.fromRGB(10, 15, 25)
 mainPanel.BorderSizePixel = 0
-mainPanel.Visible = false  -- Start hidden
+mainPanel.Visible = false
 mainPanel.Parent = screenGui
-
-local mainCorner = Instance.new("UICorner")
-mainCorner.CornerRadius = UDim.new(0, 12)
-mainCorner.Parent = mainPanel
+Instance.new("UICorner", mainPanel).CornerRadius = UDim.new(0, 12)
 
 -- Title bar
 local titleBar = Instance.new("Frame")
 titleBar.Size = UDim2.new(1, 0, 0, 40)
-titleBar.Position = UDim2.new(0, 0, 0, 0)
 titleBar.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
 titleBar.BorderSizePixel = 0
 titleBar.Parent = mainPanel
-
-local titleCorner = Instance.new("UICorner")
-titleCorner.CornerRadius = UDim.new(0, 12)
-titleCorner.Parent = titleBar
+Instance.new("UICorner", titleBar).CornerRadius = UDim.new(0, 12)
 
 -- Title text
 local titleText = Instance.new("TextLabel")
@@ -310,17 +289,26 @@ closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 closeBtn.Parent = titleBar
 Instance.new("UICorner", closeBtn)
 
--- Content area
-local contentArea = Instance.new("Frame")
-contentArea.Size = UDim2.new(1, -20, 1, -50)
-contentArea.Position = UDim2.new(0, 10, 0, 45)
+-- >> PERUBAHAN BESAR: Content area diubah menjadi ScrollingFrame <<
+local contentArea = Instance.new("ScrollingFrame")
+contentArea.Size = UDim2.new(1, -10, 1, -50)
+contentArea.Position = UDim2.new(0, 5, 0, 45)
 contentArea.BackgroundTransparency = 1
+contentArea.BorderSizePixel = 0
+contentArea.ScrollBarThickness = 6
+contentArea.CanvasSize = UDim2.new(0, 0, 0, 0) -- Akan diatur nanti
 contentArea.Parent = mainPanel
+
+-- >> KODE BARU: UIListLayout untuk mengatur semua section secara otomatis <<
+local contentLayout = Instance.new("UIListLayout")
+contentLayout.Padding = UDim.new(0, 10) -- Jarak antar section
+contentLayout.SortOrder = Enum.SortOrder.LayoutOrder
+contentLayout.Parent = contentArea
 
 -- Scanner section
 local scannerSection = Instance.new("Frame")
-scannerSection.Size = UDim2.new(1, 0, 0, 120) -- >> DIUBAH: Tinggi frame diperbesar
-scannerSection.Position = UDim2.new(0, 0, 0, 10)
+scannerSection.Size = UDim2.new(1, 0, 0, 120)
+-- scannerSection.Position DIHAPUS, diatur oleh UIListLayout
 scannerSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 scannerSection.BorderSizePixel = 0
 scannerSection.Parent = contentArea
@@ -359,10 +347,9 @@ scanStatus.BackgroundTransparency = 1
 scanStatus.TextXAlignment = Enum.TextXAlignment.Left
 scanStatus.Parent = scannerSection
 
--- >> KODE BARU: Tombol untuk Save Log <<
 local saveLogBtn = Instance.new("TextButton")
 saveLogBtn.Size = UDim2.new(0, 200, 0, 35)
-saveLogBtn.Position = UDim2.new(0, 10, 0, 75) -- Posisi di bawah tombol Scan
+saveLogBtn.Position = UDim2.new(0, 10, 0, 75)
 saveLogBtn.Text = "💾 Save Log to File"
 saveLogBtn.Font = Enum.Font.GothamBold
 saveLogBtn.TextSize = 12
@@ -371,11 +358,10 @@ saveLogBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 saveLogBtn.Parent = scannerSection
 Instance.new("UICorner", saveLogBtn)
 
-
 -- Module loader section
 local loaderSection = Instance.new("Frame")
 loaderSection.Size = UDim2.new(1, 0, 0, 100)
-loaderSection.Position = UDim2.new(0, 0, 0, 140) -- >> DIUBAH: Posisi Y disesuaikan
+-- loaderSection.Position DIHAPUS
 loaderSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 loaderSection.BorderSizePixel = 0
 loaderSection.Parent = contentArea
@@ -392,7 +378,18 @@ loaderTitle.BackgroundTransparency = 1
 loaderTitle.TextXAlignment = Enum.TextXAlignment.Left
 loaderTitle.Parent = loaderSection
 
--- Module name input
+local moduleInput = Instance.new("TextBox")
+moduleInput.Size = UDim2.new(1, -240, 0, 25)
+moduleInput.Position = UDim2.new(0, 130, 0, 35)
+moduleInput.PlaceholderText = "Enter module name (e.g. AutoFishingController)"
+moduleInput.Font = Enum.Font.Gotham
+moduleInput.TextSize = 10
+moduleInput.BackgroundColor3 = Color3.fromRGB(30, 35, 45)
+moduleInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+moduleInput.BorderSizePixel = 0
+moduleInput.Parent = loaderSection
+Instance.new("UICorner", moduleInput)
+
 local moduleLabel = Instance.new("TextLabel")
 moduleLabel.Size = UDim2.new(0, 120, 0, 25)
 moduleLabel.Position = UDim2.new(0, 10, 0, 35)
@@ -404,24 +401,10 @@ moduleLabel.BackgroundTransparency = 1
 moduleLabel.TextXAlignment = Enum.TextXAlignment.Left
 moduleLabel.Parent = loaderSection
 
-local moduleInput = Instance.new("TextBox")
-moduleInput.Size = UDim2.new(0, 300, 0, 25)
-moduleInput.Position = UDim2.new(0, 130, 0, 35)
-moduleInput.PlaceholderText = "Enter module name (e.g. AutoFishingController)"
-moduleInput.Text = ""
-moduleInput.Font = Enum.Font.Gotham
-moduleInput.TextSize = 10
-moduleInput.BackgroundColor3 = Color3.fromRGB(30, 35, 45)
-moduleInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-moduleInput.BorderSizePixel = 0
-moduleInput.Parent = loaderSection
-Instance.new("UICorner", moduleInput)
-
--- Load button
 local loadBtn = Instance.new("TextButton")
-loadBtn.Size = UDim2.new(0, 150, 0, 25)
-loadBtn.Position = UDim2.new(0, 440, 0, 35)
-loadBtn.Text = "📁 LOAD MODULE"
+loadBtn.Size = UDim2.new(0, 100, 0, 25)
+loadBtn.Position = UDim2.new(1, -105, 0, 35)
+loadBtn.Text = "📁 LOAD"
 loadBtn.Font = Enum.Font.GothamBold
 loadBtn.TextSize = 10
 loadBtn.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
@@ -429,7 +412,6 @@ loadBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 loadBtn.Parent = loaderSection
 Instance.new("UICorner", loadBtn)
 
--- Quick load buttons
 local autoFishBtn = Instance.new("TextButton")
 autoFishBtn.Size = UDim2.new(0, 150, 0, 25)
 autoFishBtn.Position = UDim2.new(0, 10, 0, 70)
@@ -466,7 +448,7 @@ Instance.new("UICorner", baitsBtn)
 -- Method executor section
 local executorSection = Instance.new("Frame")
 executorSection.Size = UDim2.new(1, 0, 0, 120)
-executorSection.Position = UDim2.new(0, 0, 0, 250) -- >> DIUBAH: Posisi Y disesuaikan
+-- executorSection.Position DIHAPUS
 executorSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 executorSection.BorderSizePixel = 0
 executorSection.Parent = contentArea
@@ -483,7 +465,18 @@ execTitle.BackgroundTransparency = 1
 execTitle.TextXAlignment = Enum.TextXAlignment.Left
 execTitle.Parent = executorSection
 
--- Method name input
+local methodInput = Instance.new("TextBox")
+methodInput.Size = UDim2.new(1, -290, 0, 25)
+methodInput.Position = UDim2.new(0, 130, 0, 35)
+methodInput.PlaceholderText = "Enter method name"
+methodInput.Font = Enum.Font.Gotham
+methodInput.TextSize = 10
+methodInput.BackgroundColor3 = Color3.fromRGB(30, 35, 45)
+methodInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+methodInput.BorderSizePixel = 0
+methodInput.Parent = executorSection
+Instance.new("UICorner", methodInput)
+
 local methodLabel = Instance.new("TextLabel")
 methodLabel.Size = UDim2.new(0, 120, 0, 25)
 methodLabel.Position = UDim2.new(0, 10, 0, 35)
@@ -495,20 +488,18 @@ methodLabel.BackgroundTransparency = 1
 methodLabel.TextXAlignment = Enum.TextXAlignment.Left
 methodLabel.Parent = executorSection
 
-local methodInput = Instance.new("TextBox")
-methodInput.Size = UDim2.new(0, 200, 0, 25)
-methodInput.Position = UDim2.new(0, 130, 0, 35)
-methodInput.PlaceholderText = "Enter method name"
-methodInput.Text = ""
-methodInput.Font = Enum.Font.Gotham
-methodInput.TextSize = 10
-methodInput.BackgroundColor3 = Color3.fromRGB(30, 35, 45)
-methodInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-methodInput.BorderSizePixel = 0
-methodInput.Parent = executorSection
-Instance.new("UICorner", methodInput)
+local argsInput = Instance.new("TextBox")
+argsInput.Size = UDim2.new(1, -290, 0, 25)
+argsInput.Position = UDim2.new(0, 130, 0, 70)
+argsInput.PlaceholderText = "Arguments (e.g. arg1, 123, true)"
+argsInput.Font = Enum.Font.Gotham
+argsInput.TextSize = 10
+argsInput.BackgroundColor3 = Color3.fromRGB(30, 35, 45)
+argsInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+argsInput.BorderSizePixel = 0
+argsInput.Parent = executorSection
+Instance.new("UICorner", argsInput)
 
--- Arguments input
 local argsLabel = Instance.new("TextLabel")
 argsLabel.Size = UDim2.new(0, 120, 0, 25)
 argsLabel.Position = UDim2.new(0, 10, 0, 70)
@@ -520,24 +511,10 @@ argsLabel.BackgroundTransparency = 1
 argsLabel.TextXAlignment = Enum.TextXAlignment.Left
 argsLabel.Parent = executorSection
 
-local argsInput = Instance.new("TextBox")
-argsInput.Size = UDim2.new(0, 200, 0, 25)
-argsInput.Position = UDim2.new(0, 130, 0, 70)
-argsInput.PlaceholderText = "Arguments (e.g. arg1, 123, true)"
-argsInput.Text = ""
-argsInput.Font = Enum.Font.Gotham
-argsInput.TextSize = 10
-argsInput.BackgroundColor3 = Color3.fromRGB(30, 35, 45)
-argsInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-argsInput.BorderSizePixel = 0
-argsInput.Parent = executorSection
-Instance.new("UICorner", argsInput)
-
--- Execute button
 local executeBtn = Instance.new("TextButton")
-executeBtn.Size = UDim2.new(0, 150, 0, 50)
-executeBtn.Position = UDim2.new(0, 350, 0, 45)
-executeBtn.Text = "🔧 EXECUTE METHOD"
+executeBtn.Size = UDim2.new(0, 150, 0, 60)
+executeBtn.Position = UDim2.new(1, -155, 0, 35)
+executeBtn.Text = "🔧 EXECUTE"
 executeBtn.Font = Enum.Font.GothamBold
 executeBtn.TextSize = 11
 executeBtn.BackgroundColor3 = Color3.fromRGB(200, 100, 50)
@@ -548,7 +525,7 @@ Instance.new("UICorner", executeBtn)
 -- Methods display section
 local methodsSection = Instance.new("Frame")
 methodsSection.Size = UDim2.new(1, 0, 0, 150)
-methodsSection.Position = UDim2.new(0, 0, 0, 380) -- >> DIUBAH: Posisi Y disesuaikan
+-- methodsSection.Position DIHAPUS
 methodsSection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 methodsSection.BorderSizePixel = 0
 methodsSection.Parent = contentArea
@@ -565,9 +542,8 @@ methodsTitle.BackgroundTransparency = 1
 methodsTitle.TextXAlignment = Enum.TextXAlignment.Left
 methodsTitle.Parent = methodsSection
 
--- Scrolling frame for methods
 local methodsFrame = Instance.new("ScrollingFrame")
-methodsFrame.Size = UDim2.new(1, -20, 0, 110)
+methodsFrame.Size = UDim2.new(1, -20, 1, -40)
 methodsFrame.Position = UDim2.new(0, 10, 0, 30)
 methodsFrame.BackgroundColor3 = Color3.fromRGB(10, 15, 25)
 methodsFrame.BorderSizePixel = 0
@@ -577,8 +553,8 @@ methodsFrame.Parent = methodsSection
 Instance.new("UICorner", methodsFrame)
 
 local methodsText = Instance.new("TextLabel")
-methodsText.Size = UDim2.new(1, -10, 1, 0)
-methodsText.Position = UDim2.new(0, 5, 0, 0)
+methodsText.Size = UDim2.new(1, 0, 0, 0) -- Size Y akan diatur otomatis
+methodsText.AutomaticSize = Enum.AutomaticSize.Y
 methodsText.Text = "No module loaded yet..."
 methodsText.Font = Enum.Font.Gotham
 methodsText.TextSize = 9
@@ -592,7 +568,7 @@ methodsText.Parent = methodsFrame
 -- History section
 local historySection = Instance.new("Frame")
 historySection.Size = UDim2.new(1, 0, 0, 100)
-historySection.Position = UDim2.new(0, 0, 0, 540) -- >> DIUBAH: Posisi Y disesuaikan
+-- historySection.Position DIHAPUS
 historySection.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
 historySection.BorderSizePixel = 0
 historySection.Parent = contentArea
@@ -609,9 +585,8 @@ historyTitle.BackgroundTransparency = 1
 historyTitle.TextXAlignment = Enum.TextXAlignment.Left
 historyTitle.Parent = historySection
 
--- Scrolling frame for history
 local historyFrame = Instance.new("ScrollingFrame")
-historyFrame.Size = UDim2.new(1, -120, 0, 60)
+historyFrame.Size = UDim2.new(1, -120, 1, -40)
 historyFrame.Position = UDim2.new(0, 10, 0, 30)
 historyFrame.BackgroundColor3 = Color3.fromRGB(10, 15, 25)
 historyFrame.BorderSizePixel = 0
@@ -625,10 +600,9 @@ historyLayout.Parent = historyFrame
 historyLayout.SortOrder = Enum.SortOrder.LayoutOrder
 historyLayout.Padding = UDim.new(0, 2)
 
--- Save Result Button
 local saveBtn = Instance.new("TextButton")
-saveBtn.Size = UDim2.new(0, 100, 0, 30)
-saveBtn.Position = UDim2.new(1, -110, 0, 60)
+saveBtn.Size = UDim2.new(0, 100, 0, 60)
+saveBtn.Position = UDim2.new(1, -110, 0, 30)
 saveBtn.Text = "💾 Save Result"
 saveBtn.Font = Enum.Font.GothamBold
 saveBtn.TextSize = 12
@@ -636,6 +610,15 @@ saveBtn.BackgroundColor3 = Color3.fromRGB(70, 170, 90)
 saveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 saveBtn.Parent = historySection
 Instance.new("UICorner", saveBtn)
+
+-- >> KODE BARU: Fungsi untuk update ukuran canvas scroll utama <<
+local function updateMainCanvasSize()
+    task.wait() -- Tunggu 1 frame agar ukuran konten ter-update
+    contentArea.CanvasSize = UDim2.new(0, 0, 0, contentLayout.AbsoluteContentSize.Y)
+end
+
+-- Panggil fungsi ini setelah semua UI dibuat
+updateMainCanvasSize()
 
 saveBtn.MouseButton1Click:Connect(function()
     local lines = {}
@@ -655,7 +638,6 @@ saveBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- Update methods display
 local function updateMethods(moduleName)
     if not ModuleAnalyzer.methods[moduleName] then
         methodsText.Text = "No methods found for " .. moduleName
@@ -668,22 +650,12 @@ local function updateMethods(moduleName)
         table.insert(methodLines, line)
     end
     
-    if #methodLines == 0 then
-        methodsText.Text = "No methods found for " .. moduleName
-    else
-        methodsText.Text = table.concat(methodLines, "\n")
-    end
+    methodsText.Text = #methodLines > 0 and table.concat(methodLines, "\n") or "No methods found for " .. moduleName
     
-    local textBounds = game:GetService("TextService"):GetTextSize(
-        methodsText.Text,
-        methodsText.TextSize,
-        methodsText.Font,
-        Vector2.new(methodsFrame.AbsoluteSize.X - 10, math.huge)
-    )
-    methodsFrame.CanvasSize = UDim2.new(0, 0, 0, textBounds.Y + 10)
+    task.wait()
+    methodsFrame.CanvasSize = UDim2.new(0, 0, 0, methodsText.AbsoluteSize.Y)
 end
 
--- Update history display
 local function updateHistory()
     for _, child in ipairs(historyFrame:GetChildren()) do
         if not child:IsA("UIListLayout") and not child:IsA("UICorner") then
@@ -693,7 +665,7 @@ local function updateHistory()
 
     if #ModuleAnalyzer.history == 0 then
         local emptyLabel = Instance.new("TextLabel")
-        emptyLabel.Size = UDim2.new(1, -10, 0, 18)
+        emptyLabel.Size = UDim2.new(1, 0, 0, 18)
         emptyLabel.Text = "No executions yet..."
         emptyLabel.Font = Enum.Font.Gotham
         emptyLabel.TextSize = 9
@@ -702,24 +674,25 @@ local function updateHistory()
         emptyLabel.TextXAlignment = Enum.TextXAlignment.Left
         emptyLabel.Parent = historyFrame
     else
-        for i = math.max(1, #ModuleAnalyzer.history - 10), #ModuleAnalyzer.history do
+        for i = math.max(1, #ModuleAnalyzer.history - 20), #ModuleAnalyzer.history do
             local entry = ModuleAnalyzer.history[i]
             if entry then
                 local status = entry.success and "✅" or "❌"
-                local line = string.format("[%s] %s %s.%s → %s", entry.time, status, entry.module, entry.method, tostring(entry.result))
+                local line = string.format("[%s] %s.%s → %s", entry.time, entry.module, entry.method, tostring(entry.result))
                 local label = Instance.new("TextLabel")
-                label.Size = UDim2.new(1, -10, 0, 18)
+                label.Size = UDim2.new(1, 0, 0, 18)
                 label.Text = line
                 label.Font = Enum.Font.Gotham
                 label.TextSize = 9
-                label.TextColor3 = Color3.fromRGB(200, 200, 200)
+                label.TextColor3 = entry.success and Color3.fromRGB(200, 200, 200) or Color3.fromRGB(255, 120, 120)
                 label.BackgroundTransparency = 1
                 label.TextXAlignment = Enum.TextXAlignment.Left
                 label.Parent = historyFrame
             end
         end
     end
-    historyFrame.CanvasSize = UDim2.new(0, 0, 0, historyLayout.AbsoluteContentSize.Y + 10)
+    task.wait()
+    historyFrame.CanvasSize = UDim2.new(0, 0, 0, historyLayout.AbsoluteContentSize.Y)
 end
 
 -- Button handlers
@@ -730,7 +703,6 @@ scanBtn.MouseButton1Click:Connect(function()
     
     task.spawn(function()
         local modules = scanModuleScripts()
-        
         task.wait(1)
         scanBtn.Text = "📁 Scan All Modules"
         scanBtn.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
@@ -738,9 +710,6 @@ scanBtn.MouseButton1Click:Connect(function()
     end)
 end)
 
--- ===================================================================
--- >> KODE BARU: Fungsi untuk tombol Save Log <<
--- ===================================================================
 saveLogBtn.MouseButton1Click:Connect(function()
     if #consoleLog == 0 then
         Notify("Save Log", "⚠️ Log console masih kosong!", 4)
@@ -760,11 +729,9 @@ saveLogBtn.MouseButton1Click:Connect(function()
         Notify("Save Log", "❌ Gagal menyimpan log! " .. tostring(err), 5)
     end
 end)
--- ===================================================================
 
 loadBtn.MouseButton1Click:Connect(function()
     local moduleName = moduleInput.Text
-    
     if moduleName == "" then
         Notify("Error", "❌ Please enter a module name!")
         return
@@ -775,11 +742,9 @@ loadBtn.MouseButton1Click:Connect(function()
     
     task.spawn(function()
         local success = loadModule(moduleName)
-        
         task.wait(0.5)
-        loadBtn.Text = "📁 LOAD MODULE"
+        loadBtn.Text = "📁 LOAD"
         loadBtn.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
-        
         if success then
             updateMethods(moduleName)
         end
@@ -801,16 +766,13 @@ executeBtn.MouseButton1Click:Connect(function()
     
     task.spawn(function()
         callModuleMethod(moduleName, methodName, args)
-        
         task.wait(0.5)
-        executeBtn.Text = "🔧 EXECUTE METHOD"
+        executeBtn.Text = "🔧 EXECUTE"
         executeBtn.BackgroundColor3 = Color3.fromRGB(200, 100, 50)
-        
         updateHistory()
     end)
 end)
 
--- Quick load buttons
 autoFishBtn.MouseButton1Click:Connect(function()
     moduleInput.Text = "AutoFishingController"
     loadModule("AutoFishingController")
@@ -834,9 +796,7 @@ closeBtn.MouseButton1Click:Connect(function()
     print("📁 Module Analyzer UI hidden")
 end)
 
--- Floating button toggle functionality
 local isUIVisible = false
-
 floatingBtn.MouseButton1Click:Connect(function()
     isUIVisible = not isUIVisible
     mainPanel.Visible = isUIVisible
@@ -845,6 +805,7 @@ floatingBtn.MouseButton1Click:Connect(function()
         floatingBtn.BackgroundColor3 = Color3.fromRGB(70, 170, 90)
         print("📁 Module Analyzer UI shown")
         Notify("Module Analyzer", "📁 UI opened!")
+        updateMainCanvasSize() -- Update canvas size saat UI dibuka
     else
         floatingBtn.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
         print("📁 Module Analyzer UI hidden")
@@ -852,16 +813,13 @@ floatingBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- Make floating button draggable
 local floatingDragging = false
 local floatingDragInput, floatingMousePos, floatingFramePos
-
 floatingBtn.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         floatingDragging = true
         floatingMousePos = input.Position
         floatingFramePos = floatingBtn.Position
-        
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 floatingDragging = false
@@ -869,31 +827,27 @@ floatingBtn.InputBegan:Connect(function(input)
         end)
     end
 end)
-
 floatingBtn.InputChanged:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseMovement then
         floatingDragInput = input
     end
 end)
-
 UserInputService.InputChanged:Connect(function(input)
     if input == floatingDragInput and floatingDragging then
         local delta = input.Position - floatingMousePos
-        floatingBtn.Position = UDim2.new(floatingFramePos.X.Scale, floatingFramePos.X.Offset + delta.X, floatingFramePos.Y.Scale, floatingFramePos.Y.Offset + delta.Y)
-        floatingShadow.Position = UDim2.new(floatingBtn.Position.X.Scale, floatingBtn.Position.X.Offset - 2, floatingBtn.Position.Y.Scale, floatingBtn.Position.Y.Offset + 2)
+        local newPos = UDim2.new(floatingFramePos.X.Scale, floatingFramePos.X.Offset + delta.X, floatingFramePos.Y.Scale, floatingFramePos.Y.Offset + delta.Y)
+        floatingBtn.Position = newPos
+        floatingShadow.Position = UDim2.new(newPos.X.Scale, newPos.X.Offset - 2, newPos.Y.Scale, newPos.Y.Offset + 2)
     end
 end)
 
--- Make main panel draggable
 local dragging = false
 local dragInput, mousePos, framePos
-
 titleBar.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragging = true
         mousePos = input.Position
         framePos = mainPanel.Position
-        
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
@@ -901,13 +855,11 @@ titleBar.InputBegan:Connect(function(input)
         end)
     end
 end)
-
 titleBar.InputChanged:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseMovement then
         dragInput = input
     end
 end)
-
 UserInputService.InputChanged:Connect(function(input)
     if input == dragInput and dragging then
         local delta = input.Position - mousePos
@@ -917,19 +869,8 @@ end)
 
 -- Initial setup
 print("📁 ModuleScript Analyzer loaded!")
-print("📋 Features:")
-print("  • Scan and discover ModuleScripts")
-print("  • Load and analyze module methods")
-print("  • Execute module functions with arguments")
-print("  • Quick access to Fish It controllers")
-print("  • Floating toggle button for easy access")
-print("🎮 Controls: Click floating button to toggle UI")
-print("🎯 Ready to analyze AutoFishingController!")
-print("🌐 GitHub Deployment: Ready for Fish It game!")
-
 Notify("Module Analyzer", "📁 Module Analyzer loaded! Click floating button to open UI.")
 
--- Auto-scan on load
 task.spawn(function()
     task.wait(2)
     scanModuleScripts()
