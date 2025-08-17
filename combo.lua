@@ -5,7 +5,14 @@ print("🔗 Remote Combo Tester loaded!")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local function getRemote(name)
+    -- Cari di ReplicatedStorage
     for _, v in pairs(ReplicatedStorage:GetDescendants()) do
+        if v.Name == name and (v:IsA("RemoteEvent") or v:IsA("RemoteFunction")) then
+            return v
+        end
+    end
+    -- Cari di workspace
+    for _, v in pairs(workspace:GetDescendants()) do
         if v.Name == name and (v:IsA("RemoteEvent") or v:IsA("RemoteFunction")) then
             return v
         end
