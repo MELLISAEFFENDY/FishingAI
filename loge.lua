@@ -8,105 +8,101 @@ local function isExploitEnv()
     return type(getrawmetatable) == "function" and type(setreadonly) == "function" and type(getnamecallmethod) == "function"
 end
 
-local success, err = pcall(function()
 
-    -- Original script starts here
-    print("📝 Universal Remote Logger v2.0 loaded!")
+-- Original script starts here
+print("📝 Universal Remote Logger v2.0 loaded!")
 
-    --[[ CONFIGURATION ]]--
-    local LOG_FILE_NAME = "UniversalRemoteLog.txt" -- Nama file untuk log yang diexport
+--[[ CONFIGURATION ]]--
+local LOG_FILE_NAME = "UniversalRemoteLog.txt" -- Nama file untuk log yang diexport
 
-    --[[ SCRIPT CORE ]]--
-    local logHistory = {}
-    local isLoggingEnabled = false -- Logger dinonaktifkan saat start untuk performa
+--[[ SCRIPT CORE ]]--
+local logHistory = {}
+local isLoggingEnabled = false -- Logger dinonaktifkan saat start untuk performa
 
-
-
-    local exploitAvailable = isExploitEnv()
+local exploitAvailable, rawmt, oldNamecall, namecallHook
+local successExploit, errExploit = pcall(function()
+    exploitAvailable = isExploitEnv()
     if not exploitAvailable then
         warn("Universal Logger: Environment exploit tidak tersedia. Logger otomatis dinonaktifkan, hanya log manual yang aktif.")
+        return
     end
-
-
-
-    local rawmt, oldNamecall, namecallHook
-    if exploitAvailable then
-        rawmt = getrawmetatable(game)
-        if not rawmt then
-            warn("Universal Logger: Could not get game metatable.")
-            exploitAvailable = false
-        else
-            oldNamecall = rawmt.__namecall
-            if type(oldNamecall) ~= "function" then
-                warn("Universal Logger: `__namecall` is not a function. Cannot hook.")
-                exploitAvailable = false
-            else
-                local isHookBusy = false
-                namecallHook = function(self, ...)
-                    if isHookBusy then return oldNamecall(self, ...) end
-                    isHookBusy = true
-                    local hookSuccess, returns = pcall(function()
-                        if type(getnamecallmethod) ~= "function" then
-                            return {oldNamecall(self, ...)}
-                        end
-                        local method = getnamecallmethod()
-                        local args = {...}
-                        local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
-                        if isRemote then
-                            local results = {pcall(oldNamecall, self, ...)}
-                            local ok = table.remove(results, 1)
-                            local errorMsg = "nil"
-                            if not ok then
-                                errorMsg = tostring(results[1])
-                            end
-                            local argsStr = table.concat(args, ", ")
-                            local selfStr = tostring(self)
-                            local logMsg = string.format("[%s] [%s] %s | Args: %s | Result: %s | Error: %s",
-                                os.date("%H:%M:%S"), method, selfStr, argsStr, tostring(ok), errorMsg)
-                            print(logMsg)
-                            table.insert(logHistory, logMsg)
-                            return results
-                        end
-                        return {oldNamecall(self, ...)}
-                    end)
-                    isHookBusy = false
-                    if not hookSuccess then
-                        warn("Universal Logger Error in hook: ", returns)
-                        return oldNamecall(self, ...)
-                    end
-                    return unpack(returns)
-                end
+    rawmt = getrawmetatable(game)
+    if not rawmt then
+        warn("Universal Logger: Could not get game metatable.")
+        exploitAvailable = false
+        return
+    end
+    oldNamecall = rawmt.__namecall
+    if type(oldNamecall) ~= "function" then
+        warn("Universal Logger: `__namecall` is not a function. Cannot hook.")
+        exploitAvailable = false
+        return
+    end
+    local isHookBusy = false
+    namecallHook = function(self, ...)
+        if isHookBusy then return oldNamecall(self, ...) end
+        isHookBusy = true
+        local hookSuccess, returns = pcall(function()
+            if type(getnamecallmethod) ~= "function" then
+                return {oldNamecall(self, ...)}
             end
+            local method = getnamecallmethod()
+            local args = {...}
+            local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
+            if isRemote then
+                local results = {pcall(oldNamecall, self, ...)}
+                local ok = table.remove(results, 1)
+                local errorMsg = "nil"
+                if not ok then
+                    errorMsg = tostring(results[1])
+                end
+                local argsStr = table.concat(args, ", ")
+                local selfStr = tostring(self)
+                local logMsg = string.format("[%s] [%s] %s | Args: %s | Result: %s | Error: %s",
+                    os.date("%H:%M:%S"), method, selfStr, argsStr, tostring(ok), errorMsg)
+                print(logMsg)
+                table.insert(logHistory, logMsg)
+                return results
+            end
+            return {oldNamecall(self, ...)}
+        end)
+        isHookBusy = false
+        if not hookSuccess then
+            warn("Universal Logger Error in hook: ", returns)
+            return oldNamecall(self, ...)
         end
+        return unpack(returns)
     end
+end)
 
-    local function enableLogger()
-        if isLoggingEnabled then return end
-        isLoggingEnabled = true
-        if exploitAvailable then
-            setreadonly(rawmt, false)
-            rawmt.__namecall = namecallHook
-            setreadonly(rawmt, true)
-            print("✅ Logger otomatis diaktifkan.")
-        else
-            print("⚠️ Logger manual aktif. Fitur hook otomatis tidak tersedia di environment ini.")
-        end
+local function enableLogger()
+    if isLoggingEnabled then return end
+    isLoggingEnabled = true
+    if exploitAvailable and rawmt and namecallHook and oldNamecall then
+        setreadonly(rawmt, false)
+        rawmt.__namecall = namecallHook
+        setreadonly(rawmt, true)
+        print("✅ Logger otomatis diaktifkan.")
+    else
+        print("⚠️ Logger manual aktif. Fitur hook otomatis tidak tersedia di environment ini.")
     end
+end
 
-    local function disableLogger()
-        if not isLoggingEnabled then return end
-        isLoggingEnabled = false
-        if exploitAvailable then
-            setreadonly(rawmt, false)
-            rawmt.__namecall = oldNamecall
-            setreadonly(rawmt, true)
-            print("❌ Logger otomatis dinonaktifkan.")
-        else
-            print("⚠️ Logger manual dinonaktifkan.")
-        end
+local function disableLogger()
+    if not isLoggingEnabled then return end
+    isLoggingEnabled = false
+    if exploitAvailable and rawmt and oldNamecall then
+        setreadonly(rawmt, false)
+        rawmt.__namecall = oldNamecall
+        setreadonly(rawmt, true)
+        print("❌ Logger otomatis dinonaktifkan.")
+    else
+        print("⚠️ Logger manual dinonaktifkan.")
     end
+end
 
-    --[[ UI SETUP ]]--
+--[[ UI SETUP ]]--
+local uiSuccess, uiErr = pcall(function()
     local player = game:GetService("Players").LocalPlayer
     local playerGui = player:WaitForChild("PlayerGui")
 
@@ -178,7 +174,6 @@ local success, err = pcall(function()
     exportBtn.Parent = frame
 
     --[[ UI LOGIC ]]--
-
     toggleBtn.MouseButton1Click:Connect(function()
         if isLoggingEnabled then
             disableLogger()
@@ -245,11 +240,8 @@ local success, err = pcall(function()
 
     -- Inisialisasi awal (logger dinonaktifkan)
     disableLogger()
-
 end)
 
-
-if not success then
-    warn("❌ Universal Remote Logger failed to load: " .. tostring(err))
-    warn("Kemungkinan environment Anda tidak mendukung fungsi exploit yang dibutuhkan.")
+if not uiSuccess then
+    warn("❌ Universal Remote Logger UI failed to load: " .. tostring(uiErr))
 end
