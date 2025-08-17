@@ -12,7 +12,7 @@ local function logActivity(remoteType, remoteName, args, result, errorMsg)
 end
 
 local function wrapRemote(remote, remoteType, remoteName)
-    if remoteType == "FireServer" then
+    if remoteType == "FireServer" and typeof(remote.FireServer) == "function" then
         local oldFire = remote.FireServer
         remote.FireServer = function(self, ...)
             local args = {...}
@@ -23,7 +23,7 @@ local function wrapRemote(remote, remoteType, remoteName)
             if not ok then result, errorMsg = false, err end
             logActivity("FireServer", remoteName, table.concat(args, ", "), result, errorMsg)
         end
-    elseif remoteType == "InvokeServer" then
+    elseif remoteType == "InvokeServer" and typeof(remote.InvokeServer) == "function" then
         local oldInvoke = remote.InvokeServer
         remote.InvokeServer = function(self, ...)
             local args = {...}
