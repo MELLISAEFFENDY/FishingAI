@@ -36,35 +36,44 @@ local function autoFishLoop()
         else
             print("[AutoFishing] RE/EquipToolFromHotbar not found!")
         end
-        wait(0.2)
+        wait(1)
 
         -- 2. Request Fishing Minigame Started
         if requestFishing then
-            requestFishing:InvokeServer()
-            print("[AutoFishing] RequestFishingMinigameStarted:InvokeServer()")
+            -- Coba kirim argumen kosong, jika error, user bisa lihat
+            local result = nil
+            local ok, err = pcall(function()
+                result = requestFishing:InvokeServer()
+            end)
+            print("[AutoFishing] RequestFishingMinigameStarted:InvokeServer(), result:", result, "error:", err)
         else
             print("[AutoFishing] RF/RequestFishingMinigameStarted not found!")
         end
-        wait(0.2)
+        wait(1)
 
         -- 3. Charge Fishing Rod
         if chargeRod then
             local serverTime = safeGetServerTime()
-            chargeRod:InvokeServer(serverTime)
-            print("[AutoFishing] ChargeFishingRod:InvokeServer(" .. tostring(serverTime) .. ")")
+            print("[AutoFishing] ChargeFishingRod argumen:", serverTime)
+            local ok, err = pcall(function()
+                chargeRod:InvokeServer(serverTime)
+            end)
+            print("[AutoFishing] ChargeFishingRod:InvokeServer() error:", err)
         else
             print("[AutoFishing] RF/ChargeFishingRod not found!")
         end
-        wait(0.2)
+        wait(1)
 
         -- 4. Fishing Completed
         if fishingCompleted then
-            fishingCompleted:FireServer()
-            print("[AutoFishing] FishingCompleted:FireServer()")
+            local ok, err = pcall(function()
+                fishingCompleted:FireServer()
+            end)
+            print("[AutoFishing] FishingCompleted:FireServer() error:", err)
         else
             print("[AutoFishing] RE/FishingCompleted not found!")
         end
-        wait(0.5) -- Delay antar fishing, bisa diubah sesuai kebutuhan
+        wait(2) -- Delay antar fishing, bisa diubah sesuai kebutuhan
     end
 end
 
