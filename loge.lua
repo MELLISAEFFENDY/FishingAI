@@ -65,11 +65,5 @@ logBtn.MouseButton1Click:Connect(function()
     print("--- End Log ---\n")
 end)
 
--- Otomatis scan ulang jika ada remote baru
-game.DescendantAdded:Connect(function(obj)
-    if obj:IsA("RemoteEvent") then
-        wrapRemote(obj, "FireServer", obj:GetFullName())
-    elseif obj:IsA("RemoteFunction") then
-        wrapRemote(obj, "InvokeServer", obj:GetFullName())
-    end
-end)
+-- Block 'DescendantAdded' yang menyebabkan error telah dihapus karena tidak lagi diperlukan.
+-- Fungsionalitas logging sudah ditangani secara global oleh hook __namecall.
