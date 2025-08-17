@@ -1,69 +1,177 @@
--- Universal Remote Logger Script
--- Merekam semua aktivitas remote (FireServer/InvokeServer) di game, lengkap argumen, waktu, dan hasil eksekusi
+-- Universal Remote Logger Script v2.0
+-- Fitur: Toggle On/Off untuk performa, Show Log, dan Export Log ke file.
 -- Usage: loadstring(game:HttpGet("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/universal_remote_logger.lua"))()
 
-print("📝 Universal Remote Logger loaded!")
+print("📝 Universal Remote Logger v2.0 loaded!")
 
+--[[ CONFIGURATION ]]--
+local LOG_FILE_NAME = "UniversalRemoteLog.txt" -- Nama file untuk log yang diexport
+
+--[[ SCRIPT CORE ]]--
 local logHistory = {}
-local function logActivity(remoteType, remoteName, args, result, errorMsg)
-    local msg = string.format("[%s] [%s] %s | Args: %s | Result: %s | Error: %s", os.date("%H:%M:%S"), remoteType, remoteName, args, tostring(result), tostring(errorMsg))
-    print(msg)
-    table.insert(logHistory, msg)
-end
-
--- Hook global __namecall untuk logging semua aktivitas remote
+local isLoggingEnabled = false -- Logger dinonaktifkan saat start untuk performa
 local rawmt = getrawmetatable(game)
 local oldNamecall = rawmt.__namecall
-setreadonly(rawmt, false)
-rawmt.__namecall = function(self, ...)
+local namecallHook = function(self, ...)
     local method = getnamecallmethod()
     local args = {...}
     local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
+    
     if isRemote then
-        local result, errorMsg, retVal = true, nil, nil
+        local result, errorMsg, retVal
         local ok, ret = pcall(function()
             retVal = oldNamecall(self, unpack(args))
         end)
-        if not ok then result, errorMsg = false, ret end
-        logActivity(method, tostring(self), table.concat(args, ", "), result, errorMsg)
+        
+        if not ok then
+            result, errorMsg = false, tostring(ret)
+        else
+            result, errorMsg = true, "nil"
+        end
+        
+        local logMsg = string.format("[%s] [%s] %s | Args: %s | Result: %s | Error: %s", 
+            os.date("%H:%M:%S"), method, tostring(self), table.concat(args, ", "), tostring(result), errorMsg)
+        
+        print(logMsg)
+        table.insert(logHistory, logMsg)
         return retVal
     end
     return oldNamecall(self, ...)
 end
-setreadonly(rawmt, true)
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
--- Tidak perlu scan/wrap remote lagi, semua sudah di-hook global
+local function enableLogger()
+    if isLoggingEnabled then return end
+    isLoggingEnabled = true
+    setreadonly(rawmt, false)
+    rawmt.__namecall = namecallHook
+    setreadonly(rawmt, true)
+    print("✅ Logger diaktifkan.")
+end
 
--- UI untuk menampilkan log
-local player = game.Players.LocalPlayer
+local function disableLogger()
+    if not isLoggingEnabled then return end
+    isLoggingEnabled = false
+    setreadonly(rawmt, false)
+    rawmt.__namecall = oldNamecall
+    setreadonly(rawmt, true)
+    print("❌ Logger dinonaktifkan.")
+end
+
+--[[ UI SETUP ]]--
+local player = game:GetService("Players").LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Hapus UI lama jika ada
+if playerGui:FindFirstChild("UniversalRemoteLoggerUI") then
+    playerGui.UniversalRemoteLoggerUI:Destroy()
+end
+
 local gui = Instance.new("ScreenGui")
 gui.Name = "UniversalRemoteLoggerUI"
-gui.Parent = player:WaitForChild("PlayerGui")
+gui.Parent = playerGui
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 260, 0, 140)
+frame.Size = UDim2.new(0, 220, 0, 220)
 frame.Position = UDim2.new(0, 20, 0, 100)
-frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+frame.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+frame.BorderColor3 = Color3.fromRGB(110, 110, 255)
+frame.BorderSizePixel = 2
+frame.Draggable = true
+frame.Active = true
 frame.Parent = gui
 
-local logBtn = Instance.new("TextButton")
-logBtn.Size = UDim2.new(0, 240, 0, 40)
-logBtn.Position = UDim2.new(0, 10, 0, 20)
-logBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 200)
-logBtn.Text = "Show All Remote Log"
-logBtn.TextColor3 = Color3.fromRGB(255,255,255)
-logBtn.Font = Enum.Font.SourceSansBold
-logBtn.TextSize = 18
-logBtn.Parent = frame
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 30)
+title.BackgroundColor3 = Color3.fromRGB(110, 110, 255)
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 16
+title.Text = "Universal Logger v2.0"
+title.Parent = frame
 
-logBtn.MouseButton1Click:Connect(function()
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Size = UDim2.new(1, -20, 0, 20)
+statusLabel.Position = UDim2.new(0, 10, 0, 40)
+statusLabel.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+statusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+statusLabel.Font = Enum.Font.SourceSansSemibold
+statusLabel.TextSize = 14
+statusLabel.Text = "STATUS: DISABLED"
+statusLabel.Parent = frame
+
+local toggleBtn = Instance.new("TextButton")
+toggleBtn.Size = UDim2.new(1, -20, 0, 35)
+toggleBtn.Position = UDim2.new(0, 10, 0, 70)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+toggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleBtn.Font = Enum.Font.SourceSansBold
+toggleBtn.TextSize = 16
+toggleBtn.Text = "Enable Logging"
+toggleBtn.Parent = frame
+
+local showLogBtn = Instance.new("TextButton")
+showLogBtn.Size = UDim2.new(1, -20, 0, 35)
+showLogBtn.Position = UDim2.new(0, 10, 0, 115)
+showLogBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+showLogBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+showLogBtn.Font = Enum.Font.SourceSansBold
+showLogBtn.TextSize = 16
+showLogBtn.Text = "Show Log in Console"
+showLogBtn.Parent = frame
+
+local exportBtn = Instance.new("TextButton")
+exportBtn.Size = UDim2.new(1, -20, 0, 35)
+exportBtn.Position = UDim2.new(0, 10, 0, 160)
+exportBtn.BackgroundColor3 = Color3.fromRGB(60, 180, 90)
+exportBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+exportBtn.Font = Enum.Font.SourceSansBold
+exportBtn.TextSize = 16
+exportBtn.Text = "Export Log to File"
+exportBtn.Parent = frame
+
+--[[ UI LOGIC ]]--
+toggleBtn.MouseButton1Click:Connect(function()
+    if isLoggingEnabled then
+        disableLogger()
+        statusLabel.Text = "STATUS: DISABLED"
+        statusLabel.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+        toggleBtn.Text = "Enable Logging"
+    else
+        enableLogger()
+        statusLabel.Text = "STATUS: ENABLED"
+        statusLabel.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
+        toggleBtn.Text = "Disable Logging"
+    end
+end)
+
+showLogBtn.MouseButton1Click:Connect(function()
+    if #logHistory == 0 then
+        print("Log is empty.")
+        return
+    end
     print("\n--- Universal Remote Log History ---")
-    for i, v in ipairs(logHistory) do
-        print(v)
+    for _, msg in ipairs(logHistory) do
+        print(msg)
     end
     print("--- End Log ---\n")
 end)
 
--- Block 'DescendantAdded' yang menyebabkan error telah dihapus karena tidak lagi diperlukan.
--- Fungsionalitas logging sudah ditangani secara global oleh hook __namecall.
+exportBtn.MouseButton1Click:Connect(function()
+    if #logHistory == 0 then
+        print("Log is empty. Nothing to export.")
+        return
+    end
+    
+    -- Fungsi writefile() adalah non-standar, tapi umum di banyak executor.
+    -- Jika ini tidak berhasil, coba periksa dokumentasi executor Anda.
+    if writefile then
+        local logContent = table.concat(logHistory, "\n")
+        writefile(LOG_FILE_NAME, logContent)
+        print("✅ Log successfully exported to " .. LOG_FILE_NAME)
+    else
+        print("❌ Error: `writefile` function not available in this environment.")
+    end
+end)
+
+-- Inisialisasi awal (logger dinonaktifkan)
+disableLogger()
