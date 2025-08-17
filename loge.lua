@@ -2,6 +2,12 @@
     Universal Remote Logger v2.0
     This script is wrapped in a protective call to ensure compatibility and provide clear error messages.
 ]]
+
+-- Pastikan semua fungsi exploit tersedia sebelum menjalankan script utama
+local function isExploitEnv()
+    return type(getrawmetatable) == "function" and type(setreadonly) == "function" and type(getnamecallmethod) == "function"
+end
+
 local success, err = pcall(function()
 
     -- Original script starts here
@@ -14,16 +20,19 @@ local success, err = pcall(function()
     local logHistory = {}
     local isLoggingEnabled = false -- Logger dinonaktifkan saat start untuk performa
 
-    if type(getrawmetatable) ~= "function" or type(setreadonly) ~= "function" then
-        warn("Universal Logger: Unsupported environment. `getrawmetatable` or `setreadonly` is not available.")
+
+    if not isExploitEnv() then
+        warn("Universal Logger: Unsupported environment. Required exploit functions are not available.")
         return
     end
+
 
     local rawmt = getrawmetatable(game)
     if not rawmt then
         warn("Universal Logger: Could not get game metatable.")
         return
     end
+
 
     local oldNamecall = rawmt.__namecall
     if type(oldNamecall) ~= "function" then
@@ -32,6 +41,7 @@ local success, err = pcall(function()
     end
 
     local isHookBusy = false
+
     local namecallHook = function(self, ...)
         if isHookBusy then return oldNamecall(self, ...) end
 
@@ -40,7 +50,7 @@ local success, err = pcall(function()
             if type(getnamecallmethod) ~= "function" then
                 return {oldNamecall(self, ...)}
             end
-            
+
             local method = getnamecallmethod()
             local args = {...}
             local isRemote = (self:IsA("RemoteEvent") and method == "FireServer") or (self:IsA("RemoteFunction") and method == "InvokeServer")
@@ -61,7 +71,7 @@ local success, err = pcall(function()
 
                 print(logMsg)
                 table.insert(logHistory, logMsg)
-                
+
                 return results
             end
             return {oldNamecall(self, ...)}
@@ -217,6 +227,8 @@ local success, err = pcall(function()
 
 end)
 
+
 if not success then
     warn("❌ Universal Remote Logger failed to load: " .. tostring(err))
+    warn("Kemungkinan environment Anda tidak mendukung fungsi exploit yang dibutuhkan.")
 end
