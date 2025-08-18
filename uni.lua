@@ -1,157 +1,167 @@
--- Simple Remote Logger (Client -> Server)
--- Version: 2.0 (Stable)
--- Description: A lightweight and stable remote logger that only logs outgoing client events (C -> S).
--- This version wraps remote methods instead of using __namecall for maximum compatibility.
+-- Pro Auto-Fish Script
+-- Version: 1.0
+-- Description: An efficient auto-fishing script that uses direct remote calls for max power casts and instant minigame skips.
 
-print("📡 Loading Simple C->S Remote Logger...")
+print("🎣 Pro Auto-Fish Script Loaded")
+
+-- ===================================================================
+-- Configuration & Variables
+-- ===================================================================
+local AutoFish = {
+    enabled = false,
+    status = "Idle"
+}
+
+-- Paths to the remotes (based on our findings)
+local NET_PATH = "ReplicatedStorage.Packages._Index['sleitnick_net@0.2.0'].net"
+local RF_PATH = NET_PATH .. ".RF"
+local RE_PATH = NET_PATH .. ".RE"
+
+-- Lazy-load remotes to avoid errors
+local Remotes = {
+    ChargeFishingRod = nil,
+    FishingCompleted = nil,
+    BaitSpawned = nil
+}
 
 -- ===================================================================
 -- UI Creation
 -- ===================================================================
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "SimpleLoggerUI"
+screenGui.Name = "ProAutoFishUI"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = game:GetService("CoreGui")
 
-local mainPanel = Instance.new("Frame", screenGui)
-mainPanel.Size = UDim2.new(0, 500, 0, 300)
-mainPanel.Position = UDim2.new(0.5, -250, 1, -310) -- Start near the bottom
-mainPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
-mainPanel.BorderSizePixel = 0
-Instance.new("UICorner", mainPanel).CornerRadius = UDim.new(0, 8)
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 250, 0, 100)
+mainFrame.Position = UDim2.new(0, 20, 0.5, -50)
+mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+mainFrame.BorderSizePixel = 0
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 8)
 
-local titleBar = Instance.new("Frame", mainPanel)
-titleBar.Size = UDim2.new(1, 0, 0, 30)
-titleBar.BackgroundColor3 = Color3.fromRGB(80, 160, 255) -- Blue title bar
-Instance.new("UICorner", titleBar).CornerRadius = UDim.new(0, 8)
+local title = Instance.new("TextLabel", mainFrame)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Text = "🎣 Pro Auto-Fish"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundColor3 = Color3.fromRGB(80, 160, 255)
+Instance.new("UICorner", title).CornerRadius = UDim.new(0, 8)
 
-local titleText = Instance.new("TextLabel", titleBar)
-titleText.Size = UDim2.new(1, 0, 1, 0)
-titleText.Text = "📡 Simple Remote Logger (Client -> Server)"
-titleText.Font = Enum.Font.GothamBold
-titleText.TextSize = 14
-titleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleText.BackgroundTransparency = 1
+local toggleBtn = Instance.new("TextButton", mainFrame)
+toggleBtn.Size = UDim2.new(1, -20, 0, 30)
+toggleBtn.Position = UDim2.new(0, 10, 0, 35)
+toggleBtn.Text = "▶ Start Auto-Fish"
+toggleBtn.Font = Enum.Font.GothamBold
+toggleBtn.TextSize = 14
+toggleBtn.BackgroundColor3 = Color3.fromRGB(80, 200, 120) -- Green
+toggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", toggleBtn).CornerRadius = UDim.new(0, 5)
 
-local logFrame = Instance.new("ScrollingFrame", mainPanel)
-logFrame.Size = UDim2.new(1, -10, 1, -35)
-logFrame.Position = UDim2.new(0, 5, 0, 30)
-logFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
-logFrame.BorderSizePixel = 0
-logFrame.ScrollBarThickness = 5
-Instance.new("UICorner", logFrame).CornerRadius = UDim.new(0, 5)
-
-local logLayout = Instance.new("UIListLayout", logFrame)
-logLayout.Padding = UDim.new(0, 3)
-logLayout.SortOrder = Enum.SortOrder.LayoutOrder
+local statusLabel = Instance.new("TextLabel", mainFrame)
+statusLabel.Size = UDim2.new(1, -20, 0, 20)
+statusLabel.Position = UDim2.new(0, 10, 0, 70)
+statusLabel.Text = "Status: Idle"
+statusLabel.Font = Enum.Font.Gotham
+statusLabel.TextSize = 12
+statusLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+statusLabel.BackgroundTransparency = 1
+statusLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 -- ===================================================================
--- Logger Logic
+-- Core Logic
 -- ===================================================================
-local function formatArguments(...)
-    local args = {...}
-    local formatted = {}
-    for _, v in ipairs(args) do
-        local t = typeof(v)
-        if t == "string" then
-            table.insert(formatted, string.format('"%s"', tostring(v)))
-        elseif t == "Instance" then
-            table.insert(formatted, string.format('%s:"%s"', v.ClassName, v:GetFullName()))
+
+-- Function to safely find an object from a path string
+local function findObject(path)
+    local current = game
+    for name in string.gmatch(path, "[^%.]+") do
+        if string.find(name, "['") then -- Handle paths like _Index['...']
+            local cleanName = name:match("%['(.*)'%]")
+            current = current:FindFirstChild(cleanName)
         else
-            table.insert(formatted, tostring(v))
+            current = current:FindFirstChild(name)
+        end
+        if not current then
+            warn("ProAutoFish: Could not find", name, "in path", path)
+            return nil
         end
     end
-    return table.concat(formatted, ", ")
+    return current
 end
 
-local function addLogEntry(remote, ...)
-    local label = Instance.new("TextLabel")
-    label.Text = string.format("[%s] (%s) | Args: %s", os.date("%H:%M:%S"), remote:GetFullName(), formatArguments(...))
-    label.Font = Enum.Font.Code
-    label.TextSize = 12
-    label.TextColor3 = Color3.fromRGB(120, 220, 255) -- Blue color for C->S
-    label.BackgroundTransparency = 1
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    label.Size = UDim2.new(1, 0, 0, 15)
-    label.Parent = logFrame
+local function updateStatus(newStatus)
+    AutoFish.status = newStatus
+    statusLabel.Text = "Status: " .. newStatus
+    print("ProAutoFish:", newStatus)
+end
+
+local function startFishingCycle()
+    if not AutoFish.enabled then return end
+
+    -- 1. Cast the rod with max power
+    updateStatus("Casting rod...")
+    local success, err = pcall(function()
+        -- Argumen '1' kemungkinan besar adalah kekuatan lemparan (0 sampai 1)
+        Remotes.ChargeFishingRod:InvokeServer(1) 
+    end)
     
-    -- Auto-scroll to bottom
-    task.wait()
-    logFrame.CanvasPosition = Vector2.new(0, logLayout.AbsoluteContentSize.Y)
+    if not success then
+        updateStatus("Error casting rod! Stopping.")
+        toggleBtn.MouseButton1Click:Fire() -- Matikan auto
+        warn("ProAutoFish Error:", err)
+        return
+    end
+
+    -- 2. Wait for the fish to bite
+    updateStatus("Waiting for a bite...")
+    local connection
+    connection = Remotes.BaitSpawned.OnClientEvent:Connect(function()
+        connection:Disconnect() -- Hanya perlu satu sinyal, lalu disconnect
+        
+        if not AutoFish.enabled then return end
+
+        -- 3. Skip the minigame instantly
+        updateStatus("Fish hooked! Skipping minigame...")
+        Remotes.FishingCompleted:FireServer()
+
+        -- 4. Wait a bit before recasting to look more natural
+        updateStatus("Waiting to recast...")
+        task.wait(math.random(2, 4)) -- Tunggu 2-4 detik
+        
+        -- 5. Repeat the cycle
+        startFishingCycle()
+    end)
 end
 
 -- ===================================================================
--- Hooking Logic (Method Wrapping)
+-- UI Interactivity
 -- ===================================================================
-local hookedRemotes = {}
+toggleBtn.MouseButton1Click:Connect(function()
+    AutoFish.enabled = not AutoFish.enabled
 
-local function hookRemote(remote)
-    -- Pastikan remote belum di-hook untuk menghindari rekursi ganda
-    if hookedRemotes[remote] then return end
-    hookedRemotes[remote] = true
-
-    if remote:IsA("RemoteEvent") then
-        local originalFireServer = remote.FireServer
-        remote.FireServer = function(self, ...)
-            addLogEntry(remote, ...)
-            return originalFireServer(self, ...)
+    if AutoFish.enabled then
+        -- Initialize remotes on first start
+        if not Remotes.ChargeFishingRod then
+            print("ProAutoFish: Initializing remotes...")
+            Remotes.ChargeFishingRod = findObject(RF_PATH .. ".ChargeFishingRod")
+            Remotes.FishingCompleted = findObject(RE_PATH .. ".FishingCompleted")
+            Remotes.BaitSpawned = findObject(RE_PATH .. ".BaitSpawned")
         end
-    elseif remote:IsA("RemoteFunction") then
-        local originalInvokeServer = remote.InvokeServer
-        remote.InvokeServer = function(self, ...)
-            -- Untuk InvokeServer, kita log panggilannya, lalu kembalikan hasilnya
-            addLogEntry(remote, ...)
-            return originalInvokeServer(self, ...)
+
+        -- Check if all remotes were found
+        if not (Remotes.ChargeFishingRod and Remotes.FishingCompleted and Remotes.BaitSpawned) then
+            updateStatus("Failed to find remotes! Cannot start.")
+            AutoFish.enabled = false
+            return
         end
-    end
-end
 
-local function scanAndHookExisting()
-    print("📡 Scanning existing remotes for C->S logging...")
-    for _, descendant in ipairs(game:GetDescendants()) do
-        if descendant:IsA("RemoteEvent") or descendant:IsA("RemoteFunction") then
-            hookRemote(descendant)
-        end
-    end
-end
-
--- Hook newly created remotes
-game.DescendantAdded:Connect(function(descendant)
-    if descendant:IsA("RemoteEvent") or descendant:IsA("RemoteFunction") then
-        task.wait() -- Beri waktu agar remote terinisialisasi sepenuhnya
-        hookRemote(descendant)
+        toggleBtn.Text = "■ Stop Auto-Fish"
+        toggleBtn.BackgroundColor3 = Color3.fromRGB(220, 80, 80) -- Red
+        startFishingCycle()
+    else
+        updateStatus("Idle")
+        toggleBtn.Text = "▶ Start Auto-Fish"
+        toggleBtn.BackgroundColor3 = Color3.fromRGB(80, 200, 120) -- Green
     end
 end)
-
--- ===================================================================
--- Draggable UI
--- ===================================================================
-local UserInputService = game:GetService("UserInputService")
-local dragging = false
-local dragInput, mousePos, framePos
-
-titleBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        mousePos = input.Position
-        framePos = mainPanel.Position
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then dragging = false end
-        end)
-    end
-end)
-titleBar.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then dragInput = input end
-end)
-UserInputService.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then
-        local delta = input.Position - mousePos
-        mainPanel.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
-    end
-end)
-
--- ===================================================================
--- Initialization
--- ===================================================================
-scanAndHookExisting()
-print("📡 Simple C->S Remote Logger is now active.")
