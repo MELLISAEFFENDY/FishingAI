@@ -1,6 +1,6 @@
 --[[
     Universal Remote Spy & Logger
-    Version: 1.1
+    Version: 1.2
     Description: Automatically hooks into all RemoteEvents and RemoteFunctions to log their communications.
     Features:
     - Logs Client -> Server (FireServer, InvokeServer).
@@ -9,6 +9,7 @@
     - Handles remotes created after the script runs.
     - Floating, draggable UI with a scrollable log view.
     - Options to clear the log and save it to a file.
+    - Added pcall to __namecall hook for stability and to prevent crashes.
 ]]
 
 print("🔭 Loading Universal Remote Spy...")
@@ -24,7 +25,7 @@ local MAX_LOG_ENTRIES = 200 -- To prevent performance issues
 local RemoteSpy = {
     logEntries = {},
     ui = {},
-    logServerEvents = false -- >> BARU: Defaultnya OFF, hanya log aksi client
+    logServerEvents = false -- Defaultnya OFF, hanya log aksi client
 }
 
 -- ===================================================================
@@ -114,7 +115,6 @@ local function createUI()
     Instance.new("UICorner", clearBtn).CornerRadius = UDim.new(0, 5)
     RemoteSpy.ui.clearBtn = clearBtn
     
-    -- >> TOMBOL BARU: Untuk toggle log dari server <<
     local serverLogToggleBtn = Instance.new("TextButton", buttonFrame)
     serverLogToggleBtn.Size = UDim2.new(0.3, 0, 1, 0)
     serverLogToggleBtn.Text = "S->C Log: OFF"
@@ -149,7 +149,7 @@ local function formatArguments(...)
         elseif t == "Instance" then
             table.insert(formatted, string.format('%s:"%s"', v.ClassName, v:GetFullName()))
         elseif t == "table" then
-            table.insert(formatted, "<table>") -- Simple table representation
+            table.insert(formatted, "<table>")
         else
             table.insert(formatted, tostring(v))
         end
@@ -197,10 +197,8 @@ end
 -- ===================================================================
 local oldNamecall
 local function hookRemote(remote)
-    -- Hook Server -> Client events
     if remote:IsA("RemoteEvent") then
         remote.OnClientEvent:Connect(function(...)
-            -- >> PERUBAHAN: Hanya log jika toggle diaktifkan <<
             if RemoteSpy.logServerEvents then
                 addLogEntry("S -> C", remote, ...)
             end
@@ -209,7 +207,6 @@ local function hookRemote(remote)
 end
 
 local function setupHooks()
-    -- Hook Client -> Server calls (ini selalu aktif)
     local mt = getrawmetatable(game)
     oldNamecall = mt.__namecall
     setreadonly(mt, false)
@@ -219,19 +216,28 @@ local function setupHooks()
         if (method == "FireServer" and self:IsA("RemoteEvent")) or (method == "InvokeServer" and self:IsA("RemoteFunction")) then
             addLogEntry("C -> S", self, ...)
         end
-        return oldNamecall(self, ...)
+        
+        -- >> PERBAIKAN: Menggunakan pcall untuk mencegah crash <<
+        local success, result = pcall(function()
+            return oldNamecall(self, ...)
+        end)
+        
+        if not success then
+            -- Optional: print error if you want to debug, but it might spam the console
+            -- print("RemoteSpy __namecall error:", tostring(result))
+        end
+        
+        return result
     end)
     
     setreadonly(mt, true)
 
-    -- Hook existing remotes
     for _, descendant in ipairs(game:GetDescendants()) do
         if descendant:IsA("RemoteEvent") or descendant:IsA("RemoteFunction") then
             hookRemote(descendant)
         end
     end
 
-    -- Hook newly created remotes
     game.DescendantAdded:Connect(function(descendant)
         if descendant:IsA("RemoteEvent") or descendant:IsA("RemoteFunction") then
             task.wait()
@@ -259,7 +265,6 @@ local function setupInteractivity()
         end
     end)
 
-    -- >> LOGIKA BARU: Untuk tombol toggle S->C Log <<
     local function updateServerLogToggleBtn()
         if RemoteSpy.logServerEvents then
             ui.serverLogToggleBtn.Text = "S->C Log: ON"
