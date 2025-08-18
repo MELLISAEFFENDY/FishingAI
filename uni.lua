@@ -1,7 +1,7 @@
 -- Pro Auto-Fish Script
--- Version: 1.1
+-- Version: 1.2
 -- Description: An efficient auto-fishing script that uses direct remote calls for max power casts and instant minigame skips.
--- Fix: Patched the findObject function to correctly parse paths with special characters, preventing crashes on load.
+-- Fix: Completely rewrote the findObject function with a more stable method to prevent all pattern-related errors.
 
 print("🎣 Pro Auto-Fish Script Loaded")
 
@@ -73,24 +73,21 @@ statusLabel.TextXAlignment = Enum.TextXAlignment.Left
 -- Core Logic
 -- ===================================================================
 
--- >> PERBAIKAN: Fungsi ini diubah total untuk menangani path yang kompleks <<
--- Function to safely find an object from a path string
+-- >> PERBAIKAN: Fungsi ini ditulis ulang total agar lebih stabil <<
 local function findObject(path)
+    -- Ubah format ['...'] menjadi format . (contoh: a['b'].c -> a.b.c)
+    local cleanPath = path:gsub("%['([^']+)']", ".%1")
+    
+    local parts = {}
+    for part in cleanPath:gmatch("([^.]+)") do
+        table.insert(parts, part)
+    end
+    
     local current = game
-    -- Ganti format ['...'] menjadi format yang aman untuk dipisah berdasarkan titik
-    path = path:gsub("%['([^']*)'%]", ".__TEMP__%1")
-
-    for name in string.gmatch(path, "[^%.]+") do
-        -- Cek apakah ini adalah bagian temporary yang kita buat
-        local isTemp, tempName = name:match("__TEMP__(.+)")
-        if isTemp then
-            current = current:FindFirstChild(tempName)
-        else
-            current = current:FindFirstChild(name)
-        end
-
+    for _, partName in ipairs(parts) do
+        current = current:FindFirstChild(partName)
         if not current then
-            warn("ProAutoFish: Could not find", name, "in path", path)
+            warn("ProAutoFish: Could not find", partName, "in path", path)
             return nil
         end
     end
