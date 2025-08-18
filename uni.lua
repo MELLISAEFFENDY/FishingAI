@@ -1,7 +1,7 @@
 -- Pro Auto-Fish Script
--- Version: 1.2
+-- Version: 1.3
 -- Description: An efficient auto-fishing script that uses direct remote calls for max power casts and instant minigame skips.
--- Fix: Completely rewrote the findObject function with a more stable method to prevent all pattern-related errors.
+-- Fix: Implemented a highly robust findObject function to correctly parse complex paths and prevent all errors.
 
 print("🎣 Pro Auto-Fish Script Loaded")
 
@@ -75,24 +75,33 @@ statusLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 -- >> PERBAIKAN: Fungsi ini ditulis ulang total agar lebih stabil <<
 local function findObject(path)
-    -- Ubah format ['...'] menjadi format . (contoh: a['b'].c -> a.b.c)
-    local cleanPath = path:gsub("%['([^']+)']", ".%1")
+    local placeholders = {}
+    local i = 1
     
-    local parts = {}
-    for part in cleanPath:gmatch("([^.]+)") do
-        table.insert(parts, part)
-    end
-    
+    -- Ganti sementara bagian ['...'] dengan placeholder yang aman
+    local tempPath = path:gsub("%['([^']+)%']", function(quoted)
+        local placeholder = "__PLACEHOLDER_"..i.."__"
+        placeholders[placeholder] = quoted
+        i = i + 1
+        return "." .. placeholder
+    end)
+
     local current = game
-    for _, partName in ipairs(parts) do
+    for _, partName in ipairs(tempPath:split(".")) do
+        -- Jika ini adalah placeholder, gunakan nama aslinya
+        if placeholders[partName] then
+            partName = placeholders[partName]
+        end
+        
         current = current:FindFirstChild(partName)
         if not current then
-            warn("ProAutoFish: Could not find", partName, "in path", path)
+            warn("ProAutoFish: Could not find '" .. partName .. "' in path '" .. path .. "'")
             return nil
         end
     end
     return current
 end
+
 
 local function updateStatus(newStatus)
     AutoFish.status = newStatus
