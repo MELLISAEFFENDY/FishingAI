@@ -1,6 +1,7 @@
 -- // FISH IT! PREMIUM SCRIPT W/ FULL UI + CLICKABLE FEATURES
 -- // Made for aldii🐟💰
 -- // UI Library has been rebuilt and embedded for a fresh look and includes a toggle button.
+-- // Fixed an issue where the UI would not appear if "Remotes" folder was not found.
 
 -- // START OF EMBEDDED UI LIBRARY
 local OrionLib = (function()
@@ -173,12 +174,12 @@ local OrionLib = (function()
             end)
 
             if not activeTabButton then
-                TabButton:Invoke()
+                TabButton.MouseButton1Click:Invoke()
             end
 
             local Tab = {}
-            local elementCount = 0
             local function updateCanvasSize()
+                task.wait()
                 ContentFrame.CanvasSize = UDim2.new(0, 0, 0, ContentLayout.AbsoluteContentSize.Y + ContentPadding.PaddingTop.Offset)
             end
 
@@ -304,16 +305,23 @@ end
 
 -- Anti-AFK
 if getgenv().Settings.AntiAfk then
-    for _,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do v:Disable() end
+    pcall(function()
+        for _,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do v:Disable() end
+    end)
 end
 
 -- Fishing System
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
-local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local remotes = ReplicatedStorage:FindFirstChild("Remotes")
+
+if not remotes then
+    warn("[Fish It!]: Folder 'Remotes' tidak ditemukan. Fitur memancing/menjual tidak akan berfungsi.")
+end
 
 local function autoSellFish()
+    if not remotes then return end
     for _, fish in pairs(player.Backpack:GetChildren()) do
         if fish:IsA("Tool") and fish:FindFirstChild("FishRarity") then
             local isMutation = fish:FindFirstChild("Mutation")
@@ -334,6 +342,7 @@ end
 
 -- Main Fishing Loop
 local function startFishing()
+    if not remotes then return end
     while task.wait() and getgenv().Settings.AutoFish do
         pcall(function()
             remotes.Cast:FireServer()
@@ -368,6 +377,7 @@ local function setupMovement()
     end
 
     if getgenv().Settings.FloatEnabled then
+        if workspace:FindFirstChild("FloatPart") then workspace.FloatPart:Destroy() end
         local float = Instance.new("Part", workspace)
         float.Name = "FloatPart"
         float.Size = Vector3.new(10,1,10)
@@ -403,7 +413,7 @@ local function bringPlayerHere(targetPlayer)
 end
 
 -- UI Tabs
-local MainTab = Window:MakeTab({Name = "Auto Farm", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local MainTab = Window:MakeTab({Name = "Auto Farm"})
 
 MainTab:AddToggle({Name = "Auto Fish", Default = false, Callback = function(v)
     getgenv().Settings.AutoFish = v
@@ -431,13 +441,7 @@ MainTab:AddToggle({Name = "Log Rare Drops", Default = true, Callback = function(
 end})
 
 -- Movement Tab
-local MovementTab = Window:MakeTab({Name = "Movement", Icon = "rbxassetid://6031275983", PremiumOnly = false})
-
--- Note: AddSlider is not implemented in this new UI, so it will be skipped.
--- MovementTab:AddSlider({Name = "Walk Speed", Min = 16, Max = 100, Default = 16, Increment = 1, Callback = function(v)
---     getgenv().Settings.WalkSpeed = v
---     if player.Character then player.Character.Humanoid.WalkSpeed = v end
--- end})
+local MovementTab = Window:MakeTab({Name = "Movement"})
 
 MovementTab:AddToggle({Name = "Infinite Jump", Default = false, Callback = function(v)
     getgenv().Settings.InfiniteJump = v
@@ -450,7 +454,7 @@ MovementTab:AddToggle({Name = "Enable Float", Default = false, Callback = functi
 end})
 
 -- Teleport Menu
-local TeleportTab = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://6031091002", PremiumOnly = false})
+local TeleportTab = Window:MakeTab({Name = "Teleport"})
 
 for name, _ in pairs(teleportLocations) do
     TeleportTab:AddButton({Name = name, Callback = function()
@@ -467,6 +471,7 @@ TeleportTab:AddButton({Name = "Bait Shop", Callback = function()
 end})
 
 TeleportTab:AddButton({Name = "Spawn All Boats", Callback = function()
+    if not remotes then return end
     for _, remote in pairs(remotes:GetChildren()) do
         if remote:IsA("RemoteEvent") and remote.Name:lower():match("boat") then
             remote:FireServer()
@@ -487,7 +492,7 @@ for _, p in pairs(Players:GetPlayers()) do
 end
 
 -- Credits Tab
-local CreditsTab = Window:MakeTab({Name = "Credits", Icon = "rbxassetid://7734053494", PremiumOnly = false})
+local CreditsTab = Window:MakeTab({Name = "Credits"})
 CreditsTab:AddParagraph("Script by", "ChatGPT for Aldi ✨")
 
 -- Init
