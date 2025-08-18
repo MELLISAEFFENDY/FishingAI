@@ -1,16 +1,15 @@
---[[
-    Universal Remote Spy & Logger
-    Version: 1.2
-    Description: Automatically hooks into all RemoteEvents and RemoteFunctions to log their communications.
-    Features:
-    - Logs Client -> Server (FireServer, InvokeServer).
-    - Logs Server -> Client (FireClient, FireAllClients) with a toggle.
-    - By default, only logs client-side actions to reduce spam.
-    - Handles remotes created after the script runs.
-    - Floating, draggable UI with a scrollable log view.
-    - Options to clear the log and save it to a file.
-    - Added pcall to __namecall hook for stability and to prevent crashes.
-]]
+-- Universal Remote Spy & Logger
+-- Version: 1.3
+-- Description: Automatically hooks into all RemoteEvents and RemoteFunctions to log their communications.
+-- Features:
+-- - Logs Client -> Server (FireServer, InvokeServer).
+-- - Logs Server -> Client (FireClient, FireAllClients) with a toggle.
+-- - By default, only logs client-side actions to reduce spam.
+-- - Handles remotes created after the script runs.
+-- - Floating, draggable UI with a scrollable log view.
+-- - Options to clear the log and save it to a file.
+-- - Added pcall to __namecall hook for stability and to prevent crashes.
+-- - Changed header comment format for better executor compatibility.
 
 print("🔭 Loading Universal Remote Spy...")
 
@@ -217,13 +216,11 @@ local function setupHooks()
             addLogEntry("C -> S", self, ...)
         end
         
-        -- >> PERBAIKAN: Menggunakan pcall untuk mencegah crash <<
         local success, result = pcall(function()
             return oldNamecall(self, ...)
         end)
         
         if not success then
-            -- Optional: print error if you want to debug, but it might spam the console
             -- print("RemoteSpy __namecall error:", tostring(result))
         end
         
