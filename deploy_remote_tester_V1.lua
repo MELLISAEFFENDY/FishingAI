@@ -1,7 +1,7 @@
 -- Deploy Remote Tester with Floating UI
 -- GitHub Raw URL: https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_remote_tester.lua
 -- Usage: loadstring(game:HttpGet("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deploy_remote_tester.lua"))()
--- Version 2.1: Fixed UIGridLayout error
+-- Version 2.2: Fixed remote scanning logic
 
 -- ===================================================================
 -- >> KODE BARU: Untuk Merekam Console <<
@@ -64,7 +64,8 @@ local function scanAllRemotes()
             elseif item:IsA("RemoteFunction") then
                 table.insert(RemoteTester.foundRemotes, { name = item.Name, type = "RemoteFunction", path = fullPath, object = item })
                 print("🔧 Found RemoteFunction: " .. fullPath)
-            elseif item:IsA("Folder") then
+            -- >> PERBAIKAN: Menambahkan pengecekan untuk ModuleScript <<
+            elseif item:IsA("Folder") or item:IsA("ModuleScript") then
                 pcall(function() scanContainer(item, fullPath) end)
             end
         end
@@ -166,7 +167,7 @@ floatingShadow.ZIndex = 999
 Instance.new("UICorner", floatingShadow).CornerRadius = UDim.new(0, 32)
 
 local mainPanel = Instance.new("Frame", screenGui)
-mainPanel.Size = UDim2.new(0, 500, 0, 550) -- >> DIUBAH: Tinggi panel disesuaikan
+mainPanel.Size = UDim2.new(0, 500, 0, 550)
 mainPanel.Position = UDim2.new(0.5, -250, 0.5, -275)
 mainPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 mainPanel.Visible = false
@@ -197,7 +198,6 @@ closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 Instance.new("UICorner", closeBtn)
 
--- >> PERUBAHAN BESAR: Content area diubah menjadi ScrollingFrame <<
 local contentArea = Instance.new("ScrollingFrame", mainPanel)
 contentArea.Size = UDim2.new(1, -10, 1, -50)
 contentArea.Position = UDim2.new(0, 5, 0, 45)
@@ -212,7 +212,7 @@ contentLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
 -- Scanner section
 local scannerSection = Instance.new("Frame", contentArea)
-scannerSection.Size = UDim2.new(1, 0, 0, 120) -- >> DIUBAH: Tinggi diperbesar
+scannerSection.Size = UDim2.new(1, 0, 0, 120)
 scannerSection.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
 Instance.new("UICorner", scannerSection)
 
@@ -246,7 +246,6 @@ scanStatus.TextColor3 = Color3.fromRGB(200, 200, 200)
 scanStatus.BackgroundTransparency = 1
 scanStatus.TextXAlignment = Enum.TextXAlignment.Left
 
--- >> KODE BARU: Tombol Save Log <<
 local saveLogBtn = Instance.new("TextButton", scannerSection)
 saveLogBtn.Size = UDim2.new(0, 200, 0, 35)
 saveLogBtn.Position = UDim2.new(0, 10, 0, 75)
@@ -344,7 +343,6 @@ quickLayout.CellPadding = UDim2.new(0, 5, 0, 5)
 quickLayout.CellSize = UDim2.new(0, 140, 0, 30)
 quickLayout.StartCorner = Enum.StartCorner.TopLeft
 quickLayout.SortOrder = Enum.SortOrder.LayoutOrder
--- >> PERBAIKAN: Baris yang menyebabkan error dihapus <<
 
 local function createQuickButton(text, parent)
     local btn = Instance.new("TextButton", parent)
@@ -400,15 +398,13 @@ saveBtn.BackgroundColor3 = Color3.fromRGB(70, 170, 90)
 saveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 Instance.new("UICorner", saveBtn)
 
--- >> KODE BARU: Fungsi untuk update ukuran canvas scroll utama <<
 local function updateMainCanvasSize()
     task.wait()
     contentArea.CanvasSize = UDim2.new(0, 0, 0, contentLayout.AbsoluteContentSize.Y)
 end
 
-updateMainCanvasSize() -- Panggil sekali saat inisialisasi
+updateMainCanvasSize()
 
--- Update history display
 local function updateHistory()
     for _, child in ipairs(historyFrame:GetChildren()) do
         if not child:IsA("UIListLayout") and not child:IsA("UICorner") then
