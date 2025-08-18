@@ -1,10 +1,11 @@
 --[[
     Universal Remote Spy & Logger
-    Version: 1.0
+    Version: 1.1
     Description: Automatically hooks into all RemoteEvents and RemoteFunctions to log their communications.
     Features:
     - Logs Client -> Server (FireServer, InvokeServer).
-    - Logs Server -> Client (FireClient, FireAllClients).
+    - Logs Server -> Client (FireClient, FireAllClients) with a toggle.
+    - By default, only logs client-side actions to reduce spam.
     - Handles remotes created after the script runs.
     - Floating, draggable UI with a scrollable log view.
     - Options to clear the log and save it to a file.
@@ -22,7 +23,8 @@ local MAX_LOG_ENTRIES = 200 -- To prevent performance issues
 -- Logger System
 local RemoteSpy = {
     logEntries = {},
-    ui = {}
+    ui = {},
+    logServerEvents = false -- >> BARU: Defaultnya OFF, hanya log aksi client
 }
 
 -- ===================================================================
@@ -95,9 +97,15 @@ local function createUI()
     buttonFrame.Size = UDim2.new(1, -20, 0, 35)
     buttonFrame.Position = UDim2.new(0, 10, 1, -40)
     buttonFrame.BackgroundTransparency = 1
+    
+    local buttonLayout = Instance.new("UIListLayout", buttonFrame)
+    buttonLayout.FillDirection = Enum.FillDirection.Horizontal
+    buttonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    buttonLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    buttonLayout.Padding = UDim.new(0, 10)
 
     local clearBtn = Instance.new("TextButton", buttonFrame)
-    clearBtn.Size = UDim2.new(0.48, 0, 1, 0)
+    clearBtn.Size = UDim2.new(0.3, 0, 1, 0)
     clearBtn.Text = "🗑️ Clear Log"
     clearBtn.Font = Enum.Font.GothamBold
     clearBtn.TextSize = 14
@@ -105,10 +113,20 @@ local function createUI()
     clearBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
     Instance.new("UICorner", clearBtn).CornerRadius = UDim.new(0, 5)
     RemoteSpy.ui.clearBtn = clearBtn
+    
+    -- >> TOMBOL BARU: Untuk toggle log dari server <<
+    local serverLogToggleBtn = Instance.new("TextButton", buttonFrame)
+    serverLogToggleBtn.Size = UDim2.new(0.3, 0, 1, 0)
+    serverLogToggleBtn.Text = "S->C Log: OFF"
+    serverLogToggleBtn.Font = Enum.Font.GothamBold
+    serverLogToggleBtn.TextSize = 14
+    serverLogToggleBtn.BackgroundColor3 = Color3.fromRGB(180, 80, 80) -- Merah (OFF)
+    serverLogToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Instance.new("UICorner", serverLogToggleBtn).CornerRadius = UDim.new(0, 5)
+    RemoteSpy.ui.serverLogToggleBtn = serverLogToggleBtn
 
     local saveBtn = Instance.new("TextButton", buttonFrame)
-    saveBtn.Size = UDim2.new(0.48, 0, 1, 0)
-    saveBtn.Position = UDim2.new(0.52, 0, 0, 0)
+    saveBtn.Size = UDim2.new(0.3, 0, 1, 0)
     saveBtn.Text = "💾 Save to File"
     saveBtn.Font = Enum.Font.GothamBold
     saveBtn.TextSize = 14
@@ -140,7 +158,6 @@ local function formatArguments(...)
 end
 
 local function addLogEntry(direction, remote, ...)
-    -- Add to log table
     local entry = {
         direction = direction,
         path = remote:GetFullName(),
@@ -148,15 +165,12 @@ local function addLogEntry(direction, remote, ...)
     }
     table.insert(RemoteSpy.logEntries, 1, entry)
 
-    -- Trim old entries
     if #RemoteSpy.logEntries > MAX_LOG_ENTRIES then
         table.remove(RemoteSpy.logEntries, MAX_LOG_ENTRIES + 1)
     end
 
-    -- Update UI if visible
     if not RemoteSpy.ui.mainPanel or not RemoteSpy.ui.mainPanel.Visible then return end
 
-    -- Create new label
     local label = Instance.new("TextLabel")
     label.Text = string.format("[%s] %s (%s) | Args: %s", os.date("%H:%M:%S"), entry.direction, entry.path, entry.args)
     label.Font = Enum.Font.Code
@@ -168,9 +182,8 @@ local function addLogEntry(direction, remote, ...)
     label.LayoutOrder = -#RemoteSpy.logEntries
     label.Parent = RemoteSpy.ui.logFrame
 
-    -- Remove old labels from UI
     local children = RemoteSpy.ui.logFrame:GetChildren()
-    if #children > MAX_LOG_ENTRIES + 1 then -- +1 for the UIListLayout
+    if #children > MAX_LOG_ENTRIES + 1 then
         for i = MAX_LOG_ENTRIES + 2, #children do
             if children[i]:IsA("TextLabel") then
                 children[i]:Destroy()
@@ -187,13 +200,16 @@ local function hookRemote(remote)
     -- Hook Server -> Client events
     if remote:IsA("RemoteEvent") then
         remote.OnClientEvent:Connect(function(...)
-            addLogEntry("S -> C", remote, ...)
+            -- >> PERUBAHAN: Hanya log jika toggle diaktifkan <<
+            if RemoteSpy.logServerEvents then
+                addLogEntry("S -> C", remote, ...)
+            end
         end)
     end
 end
 
 local function setupHooks()
-    -- Hook Client -> Server calls
+    -- Hook Client -> Server calls (ini selalu aktif)
     local mt = getrawmetatable(game)
     oldNamecall = mt.__namecall
     setreadonly(mt, false)
@@ -218,7 +234,7 @@ local function setupHooks()
     -- Hook newly created remotes
     game.DescendantAdded:Connect(function(descendant)
         if descendant:IsA("RemoteEvent") or descendant:IsA("RemoteFunction") then
-            task.wait() -- Wait a frame in case properties are still being set
+            task.wait()
             hookRemote(descendant)
         end
     end)
@@ -230,12 +246,10 @@ end
 local function setupInteractivity()
     local ui = RemoteSpy.ui
 
-    -- Toggle visibility
     ui.toggleBtn.MouseButton1Click:Connect(function()
         ui.mainPanel.Visible = not ui.mainPanel.Visible
     end)
 
-    -- Clear log
     ui.clearBtn.MouseButton1Click:Connect(function()
         RemoteSpy.logEntries = {}
         for _, v in ipairs(ui.logFrame:GetChildren()) do
@@ -245,7 +259,22 @@ local function setupInteractivity()
         end
     end)
 
-    -- Save log
+    -- >> LOGIKA BARU: Untuk tombol toggle S->C Log <<
+    local function updateServerLogToggleBtn()
+        if RemoteSpy.logServerEvents then
+            ui.serverLogToggleBtn.Text = "S->C Log: ON"
+            ui.serverLogToggleBtn.BackgroundColor3 = Color3.fromRGB(80, 200, 120) -- Hijau
+        else
+            ui.serverLogToggleBtn.Text = "S->C Log: OFF"
+            ui.serverLogToggleBtn.BackgroundColor3 = Color3.fromRGB(180, 80, 80) -- Merah
+        end
+    end
+    
+    ui.serverLogToggleBtn.MouseButton1Click:Connect(function()
+        RemoteSpy.logServerEvents = not RemoteSpy.logServerEvents
+        updateServerLogToggleBtn()
+    end)
+
     ui.saveBtn.MouseButton1Click:Connect(function()
         if not writefile then
             print("Spy: writefile is not available in this executor.")
@@ -263,7 +292,6 @@ local function setupInteractivity()
         print("Spy: Log saved to " .. fileName)
     end)
 
-    -- Make panel draggable
     local dragging = false
     local dragInput, mousePos, framePos
     local titleBar = ui.mainPanel:FindFirstChild("Frame")
@@ -299,6 +327,6 @@ setupHooks()
 print("🔭 Universal Remote Spy is now active.")
 StarterGui:SetCore("SendNotification", {
     Title = "Remote Spy",
-    Text = "Spy is now active. Click the 📡 icon to view logs.",
+    Text = "Spy is now active. S->C logging is OFF by default.",
     Duration = 5
 })
