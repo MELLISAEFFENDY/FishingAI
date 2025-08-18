@@ -1,7 +1,7 @@
 -- Pro Auto-Fish Script
--- Version: 2.0
+-- Version: 2.1 (Stable)
 -- Description: An efficient auto-fishing script that uses direct remote calls for max power casts and instant minigame skips.
--- Fix: Reworked the fishing cycle logic to mimic the successful Zayros script, ensuring animations play correctly.
+-- Fix: Replaced the complex object finder with direct, hardcoded paths for maximum stability and reliability.
 
 print("🎣 Pro Auto-Fish Script Loaded")
 
@@ -14,12 +14,7 @@ local AutoFish = {
     loopThread = nil
 }
 
--- Paths to the remotes (based on our findings)
-local NET_PATH = "ReplicatedStorage.Packages._Index['sleitnick_net@0.2.0'].net"
-local RF_PATH = NET_PATH .. ".RF"
-local RE_PATH = NET_PATH .. ".RE"
-
--- Lazy-load remotes to avoid errors
+-- Direct references to remotes to avoid path errors
 local Remotes = {
     ChargeFishingRod = nil,
     RequestFishingMinigameStarted = nil,
@@ -45,7 +40,7 @@ Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 8)
 
 local title = Instance.new("TextLabel", mainFrame)
 title.Size = UDim2.new(1, 0, 0, 30)
-title.Text = "🎣 Pro Auto-Fish v2.0"
+title.Text = "🎣 Pro Auto-Fish v2.1"
 title.Font = Enum.Font.GothamBold
 title.TextSize = 16
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -75,30 +70,6 @@ statusLabel.TextXAlignment = Enum.TextXAlignment.Left
 -- ===================================================================
 -- Core Logic
 -- ===================================================================
-
--- Robust object finder using WaitForChild
-local function findObject(path, timeout)
-    timeout = timeout or 7 -- Wait up to 7 seconds per item
-    local cleanPath = path:gsub("%['([^']+)']", ".%1")
-    local parts = {}
-    for part in cleanPath:gmatch("([^.]+)") do
-        table.insert(parts, part)
-    end
-    
-    local current = game
-    for _, partName in ipairs(parts) do
-        local success, result = pcall(function()
-            return current:WaitForChild(partName, timeout)
-        end)
-        if success and result then
-            current = result
-        else
-            warn("ProAutoFish: Could not find '" .. partName .. "' in path '" .. path .. "'")
-            return nil
-        end
-    end
-    return current
-end
 
 local function updateStatus(newStatus)
     AutoFish.status = newStatus
@@ -156,21 +127,26 @@ toggleBtn.MouseButton1Click:Connect(function()
     AutoFish.enabled = not AutoFish.enabled
 
     if AutoFish.enabled then
-        -- Initialize remotes on first start
+        -- >> PERBAIKAN: Initialize remotes using direct, stable paths <<
         if not Remotes.ChargeFishingRod then
             updateStatus("Initializing remotes...")
-            Remotes.ChargeFishingRod = findObject(RF_PATH .. ".ChargeFishingRod")
-            Remotes.RequestFishingMinigameStarted = findObject(RF_PATH .. ".RequestFishingMinigameStarted")
-            Remotes.FishingCompleted = findObject(RE_PATH .. ".FishingCompleted")
-            Remotes.EquipRod = findObject(RE_PATH .. ".EquipToolFromHotbar")
-            Remotes.CancelFishing = findObject(RF_PATH .. ".CancelFishingInputs")
-        end
+            local success, result = pcall(function()
+                local Rs = game:GetService("ReplicatedStorage")
+                local NetFolder = Rs.Packages._Index["sleitnick_net@0.2.0"].net
+                
+                Remotes.ChargeFishingRod = NetFolder.RF.ChargeFishingRod
+                Remotes.RequestFishingMinigameStarted = NetFolder.RF.RequestFishingMinigameStarted
+                Remotes.FishingCompleted = NetFolder.RE.FishingCompleted
+                Remotes.EquipRod = NetFolder.RE.EquipToolFromHotbar
+                Remotes.CancelFishing = NetFolder.RF.CancelFishingInputs
+            end)
 
-        -- Check if all remotes were found
-        if not (Remotes.ChargeFishingRod and Remotes.RequestFishingMinigameStarted and Remotes.FishingCompleted and Remotes.EquipRod and Remotes.CancelFishing) then
-            updateStatus("Failed to find remotes! Cannot start.")
-            AutoFish.enabled = false
-            return
+            if not success then
+                updateStatus("Failed to find remotes! Is the game loaded?")
+                warn("ProAutoFish Init Error:", result)
+                AutoFish.enabled = false
+                return
+            end
         end
 
         toggleBtn.Text = "■ Stop Auto-Fish"
